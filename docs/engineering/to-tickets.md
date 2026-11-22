@@ -62,22 +62,22 @@ Over-decomposition is the most reported problem with this skill, and many users 
 This is the failure the vertical-slice rule is written against, and the skill still produces it sometimes. Catch it at the quiz step by asking one question per ticket: what can I demo when this is done? A ticket with no answer is a horizontal slice. Some people add a "demo path" line to each ticket for this reason, and report that it pushes the model toward vertical slices.
 
 **On GitHub the tickets weren't created as sub-issues of the spec issue.**
-This was reported across a dozen runs and several models, [most fully in issue #554](https://github.com/mattpocock/skills/issues/554). Fixed: `to-tickets` now makes each ticket a sub-issue of its source issue, and the GitHub tracker template gives the command (`gh issue create --parent <n>`, `gh` 2.94+). Re-run [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) to refresh an older `docs/agents/issue-tracker.md`.
+It was a common miss across runs and models, and it is fixed: `to-tickets` now makes each ticket a sub-issue of its source issue, and the GitHub tracker template gives the command (`gh issue create --parent <n>`, `gh` 2.94+). Re-run [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) to refresh an older `docs/agents/issue-tracker.md`.
 
 **"Blocked by" was written into the issue body instead of a real blocking link.**
-This is the same kind of problem, [reported in issue #513](https://github.com/mattpocock/skills/issues/513), where the agent even stated that GitHub has no native blocking relationship at all. It does: `gh issue create --blocked-by 12,15`. Because the skill publishes blockers first, their numbers are always available at creation time. The body text is meant to be the fallback for trackers with no native edge, not the default. The ticket template now omits `## Blocked by` when the edges are native.
+This is the same kind of problem, and the agent sometimes even states that GitHub has no native blocking relationship at all. It does: `gh issue create --blocked-by 12,15`. Because the skill publishes blockers first, their numbers are always available at creation time. The body text is meant to be the fallback for trackers with no native edge, not the default. The ticket template now omits `## Blocked by` when the edges are native.
 
 **Where do the local tickets go? The v1.1 notes said a root-level `tickets.md`.**
 They did, and that was a bug. A single shared file also caused race conditions when parallel agents wrote to it. Local mode now writes one file per ticket under `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, in dependency order, matching the layout the local tracker template already described. The `NN` prefix is a real ticket ID, so `/implement 03` works instead of retyping a long title.
 
 **It kept truncating when it tried to read my spec.**
-A very large spec can outgrow what a tracker issue serves back cleanly. There is no local copy to fall back on, so the agent spends tool calls fetching chunks again and never reaches the end. Don't clear or compact between `/to-spec` and `/to-tickets`. Run them in the same context window and the agent never has to fetch the spec back.
+A very large spec can outgrow what a tracker issue serves back cleanly. There is no local copy to fall back on, so the agent spends tool calls fetching chunks again and never reaches the end. Don't start a new session (`/new`) or let the context compact between `/to-spec` and `/to-tickets`. Run them in the same context window and the agent never has to fetch the spec back.
 
 **The acceptance criteria graded nothing: some passed before any work was done.**
 The template asks for criteria and says nothing about whether they can fail, so this happens. Three shapes recur: a criterion already true at the base commit, a criterion that only work in another ticket can satisfy, and one that restates the request rather than deriving from the artifact. Vertical slicing prevents most of it, because a slice that delivers new behaviour fails at the base commit by construction. The check is still worth doing by hand. For each criterion, name the observation that would show it false, and confirm it fails at the commit the implementer starts from.
 
 **The tickets are published. How do I actually run them?**
-The skill stops at the artifact, and there is no auto-dispatch mode. Dispatch is manual: look at the board, count the tickets with no open blockers, and open that many agent sessions. Give each ticket a fresh context, and clear between them. [implement](./implement.md) does not reliably close or check off the ticket when it finishes, on GitHub or in local markdown, so you update the ticket's state yourself.
+The skill stops at the artifact, and there is no auto-dispatch mode. Dispatch is manual: look at the board, count the tickets with no open blockers, and open that many agent sessions. Give each ticket a fresh context (a new session with `/new`, or a fresh subagent). [implement](./implement.md) does not reliably close or check off the ticket when it finishes, on GitHub or in local markdown, so you update the ticket's state yourself.
 
 ## It's working if
 
@@ -96,4 +96,4 @@ The skill stops at the artifact, and there is no auto-dispatch mode. Dispatch is
 grill-with-docs → to-spec → to-tickets → implement → code-review → retro
 ```
 
-Upstream is [to-spec](./to-spec.md), which hands it a settled spec to slice against. Keep both in one context window, with no clear between them. Downstream is [implement](./implement.md), which builds one ticket per fresh session, driving [tdd](./tdd.md) for the tests and closing with [code-review](./code-review.md). [implement-spec](./implement-spec.md) is the other way down. It reads the same blocking edges as a task graph and builds every ready ticket in parallel on one integration branch. When you're unsure which skill or flow fits, [ask-matt](./ask-matt.md) routes you.
+Upstream is [to-spec](./to-spec.md), which hands it a settled spec to slice against. Keep both in one context window, with no `/new` between them. Downstream is [implement](./implement.md), which builds one ticket per fresh session, driving [tdd](./tdd.md) for the tests and closing with [code-review](./code-review.md). [implement-spec](./implement-spec.md) is the other way down. It reads the same blocking edges as a task graph and builds every ready ticket in parallel on one integration branch. When you're unsure which skill or flow fits, [ask-matt](./ask-matt.md) routes you.

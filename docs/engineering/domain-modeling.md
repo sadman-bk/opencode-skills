@@ -6,7 +6,7 @@ It is the **active** discipline, not the passive one. Any skill can read `GLOSSA
 
 ## When to reach for it
 
-Type `/domain-modeling`, or the agent reaches for it automatically when a task fits. In practice, automatic invocation is the weakest part of the skill. When `grill-with-docs` or `wayfinder` say to load it, models often load `grilling` and skip this one. If a grilling session runs and `GLOSSARY.md` is unchanged at the end, that is what happened. Invoke it by name alongside the other skill.
+Load it with `@domain-modeling`, or the agent reaches for it automatically when a task fits. In practice, automatic invocation is the weakest part of the skill. When `grill-with-docs` or `wayfinder` say to load it, models often load `grilling` and skip this one. If a grilling session runs and `GLOSSARY.md` is unchanged at the end, that is what happened. Invoke it by name alongside the other skill.
 
 Reach for it when the *words* are the problem:
 
@@ -47,15 +47,15 @@ The `GLOSSARY.md` rule matters most, because it is the one that breaks in practi
 
 When you state how something works, the skill checks the code and points out any contradiction. *"Your code cancels entire Orders, but you just said partial cancellation is possible, which is right?"* The skill makes the language and the code agree, out loud, before it changes either.
 
-It cross-references **code** and the committed `GLOSSARY.md` and ADRs, and nothing else. It does not search your issue tracker. If your team argued out a naming collision and settled it in a closed issue months ago, the skill raises it again as if it were new. There is [an open request](https://github.com/mattpocock/skills/issues/717) to fix this. Until then, the workaround is to put the instruction in your own `docs/agents/domain.md`, which the skills already read.
+It cross-references **code** and the committed `GLOSSARY.md` and ADRs, and nothing else. It does not search your issue tracker. If your team argued out a naming collision and settled it in a closed issue months ago, the skill raises it again as if it were new. The workaround is to put the instruction in your own `docs/agents/domain.md`, which the skills already read.
 
 ## Common questions
 
 **My `GLOSSARY.md` is 500 lines. 1,000. 3,000. What do I do?**
-The size is a symptom. The cause is that the file has taken in implementation detail and decisions that never belonged in a glossary. The fix is a direct instruction: `/grill-with-docs make my GLOSSARY.md more concise and remove any implementation details from it`. Run it against a bloated file and most of it goes. Only split it with a `GLOSSARY-MAP.md` once the file is lean and still covers two domains that a reader would not want to hold at once. Splitting a bloated file gives you several bloated files. The skill's guidance here is not yet strong enough to prevent the growth in the first place, and the issue tracking that is still open.
+The size is a symptom. The cause is that the file has taken in implementation detail and decisions that never belonged in a glossary. The fix is a direct instruction: `/grill-with-docs make my GLOSSARY.md more concise and remove any implementation details from it`. Run it against a bloated file and most of it goes. Only split it with a `GLOSSARY-MAP.md` once the file is lean and still covers two domains that a reader would not want to hold at once. Splitting a bloated file gives you several bloated files. The skill's guidance here is not yet strong enough to prevent the growth in the first place.
 
 **Why is it `GLOSSARY.md` and not `CONTEXT.md`?**
-It was `CONTEXT.md` (and `CONTEXT-MAP.md`) until 1.3.0. The file is a glossary and nothing else, so `GLOSSARY.md` says so, and, as one reader put it, "with ai agents everything is context". If your repo still has a `CONTEXT.md`, re-run `/setup-matt-pocock-skills`: it offers to `git mv` the file and update `docs/agents/domain.md`. Every skill in the set looks for `GLOSSARY.md`, so keeping the old name means patching all of them.
+It was `CONTEXT.md` (and `CONTEXT-MAP.md`) originally. The file is a glossary and nothing else, so `GLOSSARY.md` says so, and, as one reader put it, "with ai agents everything is context". If your repo still has a `CONTEXT.md`, re-run `/setup-matt-pocock-skills`: it offers to `git mv` the file and update `docs/agents/domain.md`. Every skill in the set looks for `GLOSSARY.md`, so keeping the old name means patching all of them.
 
 **Where did `/ubiquitous-language` go?**
 It was removed, and it was not deprecated. Its job moved into `domain-modeling`, which maintains the whole model continuously rather than dumping a glossary out of one conversation. Vocabulary enforcement now matters more, not less. It runs underneath grilling, triage and mapping rather than as a separate pass you have to remember.
@@ -64,7 +64,7 @@ It was removed, and it was not deprecated. Its job moved into `domain-modeling`,
 Ask for it explicitly rather than waiting for it to accumulate. `/grill-with-docs help me scaffold my existing repo with a GLOSSARY.md` is the documented route. Expect a long interrogation. One user reported more than 50 questions before the file was in shape. Incidental use builds the glossary far too slowly on a brownfield repo.
 
 **Can I keep the domain model and use my own ADR format?**
-Not cleanly today. The glossary half and the ADR half ship in one skill, so a team with an established ADR convention (different template, different location, different naming) gets instructions that conflict with its house style. The current options are to copy the skill locally and edit it, or to override the ADR conventions in your repo's own agent docs. Splitting the two apart is [an open request](https://github.com/mattpocock/skills/issues/557).
+Not cleanly today. The glossary half and the ADR half ship in one skill, so a team with an established ADR convention (different template, different location, different naming) gets instructions that conflict with its house style. The current options are to copy the skill locally and edit it, or to override the ADR conventions in your repo's own agent docs.
 
 **Does a glossary actually earn its keep? It is one more artifact to review, and it can go stale.**
 Sometimes it does not. DDD gets less useful the closer it gets to the implementation. The payoff is upstream, in naming and concept alignment, not in aggregates and layer ceremony. Synonym control matters at naming boundaries: module names, table names, status enums, issue titles, CLI commands. It matters much less in ordinary prose. There is also an objection that domain terms compress communication *between humans* who already share them, and that an agent responds the same way to the plain-English description. On that reading, the glossary's value is keeping you and your reviewers aligned with what the agent is doing, not making the agent better. On a one-day build, skip it. And an unreviewed, agent-authored glossary is worse than none: it fills with confident claims that later sessions treat as true.

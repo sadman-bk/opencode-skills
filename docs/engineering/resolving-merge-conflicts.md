@@ -26,7 +26,7 @@ You cannot preserve an intent you have not read. So the work starts in the histo
 
 ## Common questions
 
-**Claude Code already resolves conflicts pretty well on its own. Why does this need a skill?**
+**The agent already resolves conflicts pretty well on its own. Why does this need a skill?**
 
 The added value is the "find the primary sources" and "run feedback loops" steps, which you otherwise have to prompt by hand every time. An unprompted agent will usually produce a plausible resolution from the diff alone and stop there. The skill's value is the two steps it will not let the agent skip: reading why each side exists, and running the checks afterwards. That is a small gain over a good model, and that is intended. At least one reader has predicted this is a whole skill that becomes a no-op as models improve.
 

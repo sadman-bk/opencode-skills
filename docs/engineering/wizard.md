@@ -6,7 +6,7 @@ The agent writes the script; it never runs it. You do, on your own machine. A wi
 
 ## When to reach for it
 
-You can type `/wizard`, and the agent can also reach for it on its own. When it hits a step you have to take (a key it can't mint, a dashboard it can't click), it builds you a wizard instead of writing the instructions into the chat, where they scroll away.
+You can load it with `@wizard`, and the agent can also reach for it on its own. When it hits a step you have to take (a key it can't mint, a dashboard it can't click), it builds you a wizard instead of writing the instructions into the chat, where they scroll away.
 
 Reach for it when the next thing blocking you is a trip through a dashboard:
 
@@ -41,7 +41,7 @@ For each captured value, scoping decides where it goes:
 
 ## The template already solves the UX
 
-The [template](https://github.com/mattpocock/skills/blob/main/skills/engineering/wizard/template.sh) ships the whole experience: progress with time remaining, confirmation gates, cross-platform URL opening including WSL, hidden entry for secrets, idempotent `.env` upserts, `gh secret` / `gh variable` writes, and a closing summary of everything it had to skip. Everything above the `STAGES` marker is a fixed library, identical in every wizard and never hand-edited. Because the library never changes, every wizard behaves the same way. The only work per wizard is to scope the procedure and author its stages.
+The [template](../../skills/engineering/wizard/template.sh) ships the whole experience: progress with time remaining, confirmation gates, cross-platform URL opening including WSL, hidden entry for secrets, idempotent `.env` upserts, `gh secret` / `gh variable` writes, and a closing summary of everything it had to skip. Everything above the `STAGES` marker is a fixed library, identical in every wizard and never hand-edited. Because the library never changes, every wizard behaves the same way. The only work per wizard is to scope the procedure and author its stages.
 
 The agent that writes a wizard never runs it end to end, because the script opens browsers and waits for human input. The agent checks it statically instead: `bash -n`, `shellcheck` where available, and a trace that every value lands where scoping said it would, with every `set_secret` name matching a real `secrets.*` reference in CI. So the first run is yours, and that run is the test.
 
@@ -70,17 +70,17 @@ Partly, and less than the launch reactions assumed. It reads the repo before it 
 
 Nowhere in particular. It's a standalone, not a chain step. The common guess is `/grill-with-docs → /to-spec → /wizard`, and that sequence is fine, but the trigger is a manual procedure showing up, which can happen at any point: before you start, mid-build, or long after ship. It also works as a discovery tool. Scoping finds the hidden prerequisites of a task, like the three API keys you hadn't thought about, before you commit to the work.
 
-**Does it work outside Claude Code?**
+**Does the script need OpenCode to run?**
 
-The script does. It's plain bash, and it runs the same whatever harness generated it. The skill itself is model-invoked, so it's listed everywhere: type `/wizard` in Claude Code or `$wizard` in Codex, or just describe the setup you're stuck on. Being model-invoked also keeps it clear of [#693](https://github.com/mattpocock/skills/issues/693), where Claude's desktop and web apps drop *user-invoked* skills from the model's listing and report them as not installed.
+No. It's plain bash, and it runs the same wherever it was generated. The skill itself is model-invoked, so it's in the model's skill list: load it with `@wizard`, or just describe the setup you're stuck on.
 
 **Didn't this used to be user-invoked?**
 
-It did. It's now model-invoked, so the agent reaches for it unprompted when it hits a step you have to take. Nothing you could do before stopped working. Model invocation lets the agent call the skill as well as you, so `/wizard` behaves as it did. The change fixes one failure. Before, an agent that hit a credentials wall mid-build dumped six numbered steps into the chat for you to follow by hand. Now it writes a wizard.
+It did. It's now model-invoked, so the agent reaches for it unprompted when it hits a step you have to take. Nothing you could do before stopped working. Model invocation lets the agent call the skill as well as you, and you can still load it yourself with `@wizard`. The change fixes one failure. Before, an agent that hit a credentials wall mid-build dumped six numbered steps into the chat for you to follow by hand. Now it writes a wizard.
 
 **It used to be in `in-progress/`. Where is it now?**
 
-`engineering/`, as of v1.2. It graduated out of the beta bucket and now ships in the plugin, so it arrives with the rest of the promoted set rather than needing an individual install. Its behaviour didn't change on graduation.
+`engineering/`, as of v1.2. It graduated out of the beta bucket and now ships in the plugin's default buckets, so it arrives with the rest of the promoted set rather than needing the `buckets` option. Its behaviour didn't change on graduation.
 
 ## It's working if
 

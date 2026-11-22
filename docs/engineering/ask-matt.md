@@ -39,12 +39,12 @@ The skill's other key idea is the **phase boundary**. A phase is a chunk of work
 | Option | Take it when |
 | --- | --- |
 | **Continue** | The next phase wants this one verbatim, or you have smart zone left. It is the only move that keeps the session as a primary source, so rule it out first |
-| **`/clear`** | Everything behind you is disposable. The cheapest option, and you cannot undo it if you were wrong |
+| **`/new`** | Everything behind you is disposable. The cheapest option. The old session stays in `/sessions`, but the new one starts with none of its context |
 | **[handoff](../productivity/handoff.md)** | Something has to travel: a new harness, a new directory, a colleague, a side task forked mid-phase |
 | **Subagent** | The task is scoped tightly enough to run with you away from the keyboard |
-| **`/compact`** | None of the above. It is the default, and the tree often ends here |
+| **Compaction** | None of the above. It is the default, and the tree often ends here. OpenCode does it automatically near the limit, or on request |
 
-People often get two of these wrong, which is why the router gives the order and not only the list. `/handoff` looks like the general way to move between context windows, but it is not. All it gives you is portability. `/compact` is the last option in the tree, not the first, because each of the four options above it is cheaper or more precise.
+People often get two of these wrong, which is why the router gives the order and not only the list. `/handoff` looks like the general way to move between context windows, but it is not. All it gives you is portability. Compaction is the last option in the tree, not the first, because each of the four options above it is cheaper or more precise.
 
 ## Common questions
 
@@ -54,23 +54,23 @@ People keep asking for one in the README. This skill is that list. A static tabl
 
 **It told me half the skills aren't installed.**
 
-This is a known bug, and it is not fixed. Most of the skills the router routes you through set `disable-model-invocation: true`, which means the harness leaves them out of the skill list it injects into the agent's context. The agent reads that list as exhaustive and reports them missing. In one reported session, it declared the whole spec-and-tickets flow absent and rerouted to bare `/grilling` and `/tdd`. Sixteen of the plugin's twenty-seven skills carry the flag, so this is the common case rather than an edge. They are installed. Type the slash command anyway, or check `.claude-plugin/plugin.json`, which is the authority on what is present.
+Most of the skills the router routes you through are user-invoked (`opencode/autoinvoke: false`), which means OpenCode leaves them out of the skill list it shows the model and registers a slash command for each instead. The agent can read the list it sees as exhaustive and report them missing. Seventeen of the plugin's twenty-seven promoted skills are user-invoked, so this is the common case rather than an edge. They are installed. Type the slash command anyway (`/to-spec`, `/to-tickets`), or load the skill with `@to-spec`.
 
 **It described a skill's behaviour, and the skill doesn't do that.**
 
-This is also a real bug, and also not fixed. The router answers from its own one-line summary of each skill rather than from the skill. One detailed report tracked three instances in a single session, including a recommendation to skip [to-spec](./to-spec.md) based only on the summary "turn the thread into a spec". The router never opened `to-spec/SKILL.md`. In every case it verified only after the user pushed back, and never on its own initiative. Skipping `to-spec` there cost a real seam check, and the tickets that came out undercounted the work. When the router states something about another skill that you will act on, ask it to open that `SKILL.md` first. The same applies to questions the map does not cover at all, such as whether to use plan mode: that answer is the model's inference, not something written down here.
+The router carries only a one-line summary of each skill, and a summary can mislead. A recommendation to skip [to-spec](./to-spec.md) based only on "turn the thread into a spec" costs a real seam check, and the tickets that come out undercount the work. The skill tells the router to read a skill's `SKILL.md` before it states what that skill does or recommends skipping a step, but a model can still answer from the summary. When the router states something about another skill that you will act on, check the trace for it opening that `SKILL.md`, and ask it to if it did not. The same applies to questions the map does not cover at all, such as whether to use plan mode: that answer is the model's inference, not something written down here.
 
 **Why is it prose instead of a numbered checklist?**
 
-It is a fair complaint. An open issue argues that most of the routing is deterministic and that the narrative makes it hard to scan. Nothing stops you asking for the compressed form: "just give me the sequence" gets you the sequence. The prose carries the conditional part: the branches, where a human decision is expected, and where to clear or compact between steps. A flat checklist drops exactly that.
+It is a fair complaint: most of the routing is deterministic, and the narrative makes it hard to scan. Nothing stops you asking for the compressed form: "just give me the sequence" gets you the sequence. The prose carries the conditional part: the branches, where a human decision is expected, and where to start a fresh session or compact between steps. A flat checklist drops exactly that.
 
 **Can it route over my own skills, or another author's?**
 
-No. Three separate proposals have asked for a router that reads your local `skills/` directory and recommends from whatever is installed. `ask-matt` is not that. It is a map of one set, maintained by hand, and it knows nothing about skills you wrote or installed from elsewhere.
+No. `ask-matt` does not read your local `skills/` directory and recommend from whatever is installed. It is a map of one set, maintained by hand, and it knows nothing about skills you wrote or installed from elsewhere.
 
 **It told me to edit a SKILL.md.**
 
-That advice is often correct, but the edit rarely lasts. Someone asked it how to make [implement](./implement.md) close tickets, was told to add a line to the skill, and saw the problem at once. `npx skills update` overwrites the file, and the plugin install is read-only. Put standing behaviour in your own `CLAUDE.md` or `AGENTS.md`, or say it in the invocation. Changes you make in the prompt survive updates. People point the flow at Linear instead of GitHub this way, or ask it which open tickets could run in parallel.
+That advice is often correct, but the edit rarely lasts. Someone asked it how to make [implement](./implement.md) close tickets, was told to add a line to the skill, and saw the problem at once. A plugin update replaces the file, and an edit inside the plugin checkout is lost with it. Put standing behaviour in your own `AGENTS.md`, or say it in the invocation. Changes you make in the prompt survive updates. People point the flow at Linear instead of GitHub this way, or ask it which open tickets could run in parallel.
 
 **It named a skill I don't have, or missed one I do.**
 
@@ -79,7 +79,7 @@ Check the changelog for a rename before assuming it is gone. `writing-great-skil
 ## It's working if
 
 - It ends by naming what to type and stops there, instead of starting the work itself.
-- The route it gives back mentions where to clear or compact context and where you are expected to review, not just a list of skill names.
+- The route it gives back mentions where to start a fresh session or compact context and where you are expected to review, not just a list of skill names.
 - Where two skills are close, it says which one and why the other is wrong for you.
 - Any claim it makes about another skill's behaviour shows up in the trace as it reading that skill's `SKILL.md`.
 - You recognise your own situation in what it hands back, rather than the nearest generic scenario.

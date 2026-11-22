@@ -85,10 +85,6 @@ Partly. It works well on big existing codebases that lack consistent structure, 
 
 Rarely, so know that before you start. The skill exists to output findings, so it tends to produce candidates instead of concluding that nothing is wrong. Use the strength badges to correct for this. If every candidate in a report is `Speculative`, the skill found nothing.
 
-**Does it work in Codex or another harness?**
-
-Partly. The exploration step names Claude Code's `Agent` tool with `subagent_type=Explore` directly. A harness without that tool may skip the parallel exploration instead of using its own equivalent. The skill still runs, but the scan is less thorough. Someone has proposed a harness-neutral rewrite, but it is not merged.
-
 **How do I actually implement deep modules in TypeScript?**
 
 The skill does not ship a good answer. People often ask for a `TYPESCRIPT.md` with concrete file and module layouts for the principles, and it does not exist. The skill tells you where a deepening belongs and what goes behind the seam. You must turn that into a package or directory structure yourself.

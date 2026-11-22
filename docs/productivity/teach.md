@@ -35,7 +35,7 @@ What accumulates in that directory:
 | `assets/*` | Reusable components, starting with a shared stylesheet, so the lessons look like one course |
 | `NOTES.md` | Your stated teaching preferences |
 
-Two notes on that list. A glossary suits most topics, but the skill ships a `GLOSSARY-FORMAT.md` that `SKILL.md` no longer links to, so you only get one if you ask ([issue #559](https://github.com/mattpocock/skills/issues/559)). All of it lands in the directory you ran `/teach` in.
+Two notes on that list. A glossary suits most topics, but the skill ships a `GLOSSARY-FORMAT.md` that `SKILL.md` no longer links to, so you only get one if you ask. All of it lands in the directory you ran `/teach` in.
 
 ## Storage strength, not fluency
 
@@ -55,20 +55,17 @@ Lessons are built from **components** in `assets/`: stylesheets, quiz widgets, s
 
 ## Common questions
 
-**Where does it put the files? Mine ended up in `~/.claude/skills`.**
-In the directory you ran `/teach` in ([#377](https://github.com/mattpocock/skills/issues/377)).
-
 **Do I stay in one session, or start a new one per lesson?**
 All three approaches work: staying in the same session, re-invoking `/teach` in a new session, or opening a new session in the same folder. Each lesson is its own invocation. The course state lives in the folder, not in the conversation. Common practice is to open a fresh session in the workspace and say `/teach next lesson for <topic>`.
 
 **How do I know it isn't teaching me something it made up?**
-You don't, on the skill's word alone. You read the primary sources. `teach` is not reliable enough to trust unchecked, and no skill built on an LLM is. The grounding (`RESOURCES.md`, citations in every lesson, one recommended primary source per lesson) makes it cheap to check a lesson. It does not remove the need to check. This failure has happened: one user learning a 2x2 Rubik's cube got made-up move sequences that don't solve it. In a case like that, check the model, the harness, the effort setting, and the source. Risk is highest in procedural domains with precise notation, and lowest where the output is immediately verifiable, like code you can run.
+You don't, on the skill's word alone. You read the primary sources. `teach` is not reliable enough to trust unchecked, and no skill built on an LLM is. The grounding (`RESOURCES.md`, citations in every lesson, one recommended primary source per lesson) makes it cheap to check a lesson. It does not remove the need to check. This failure has happened: one user learning a 2x2 Rubik's cube got made-up move sequences that don't solve it. In a case like that, check the model, the effort setting, and the source. Risk is highest in procedural domains with precise notation, and lowest where the output is immediately verifiable, like code you can run.
 
 **The correct quiz answer is always the first option.**
-Several people have confirmed this on Sonnet, Opus and GLM, and it is still unfixed. `SKILL.md` now requires every answer to be the same number of words. That removes a different clue (the correct answer used to be the only fully-reasoned one), but says nothing about position. One contributor tested an instruction-level fix for position, and the correct answer still landed in slot A 33 times out of 33 across nine lessons ([#335](https://github.com/mattpocock/skills/issues/335)). So the real fix is a quiz component in `assets/` that shuffles the answers, not better wording. Until that ships, ignore answer position. Your `assets/` directory is yours to change, so you can ask for a component that shuffles at render time as a local fix.
+`SKILL.md` tells the agent to make every answer the same number of words, and to vary which position holds the correct answer across questions. A model can still ignore that instruction. The more reliable fix is a quiz component in `assets/` that shuffles the answers at render time, not better wording. Your `assets/` directory is yours to change, so you can ask for that component as a local fix. Until then, ignore answer position.
 
 **It assumed I already knew things, and used terms it never defined.**
-This is the most common real complaint. There is no assessment step. `teach` infers your level from the mission and the learning records, and in session one there are no learning records. One user running it inside a wayfinder pipeline put it plainly: "It never did grilling to establish my starting point so it made lots of assumptions of what I already knew." Another reported lessons that used undefined jargon, and a lesson about their hardware that covered what the hardware could do but never said what it couldn't. Two things help: state your prior knowledge and your gaps in the first message, and correct the level out loud when a lesson misses, because the correction becomes a learning record and steers the next one. An explicit knowledge-assessment step is a standing feature request ([#725](https://github.com/mattpocock/skills/issues/725)), not shipped behaviour.
+This is the most common real complaint. There is no assessment step. `teach` infers your level from the mission and the learning records, and in session one there are no learning records. One user running it inside a wayfinder pipeline put it plainly: "It never did grilling to establish my starting point so it made lots of assumptions of what I already knew." Another reported lessons that used undefined jargon, and a lesson about their hardware that covered what the hardware could do but never said what it couldn't. Two things help: state your prior knowledge and your gaps in the first message, and correct the level out loud when a lesson misses, because the correction becomes a learning record and steers the next one. An explicit knowledge-assessment step is not shipped behaviour.
 
 **Does it do spaced repetition, and does it know when to stop teaching?**
 No to the first, and not reliably to the second. The skill designs lessons around spacing and interleaving, but nothing schedules a review, and there is no Anki or calendar integration. Users ask for both often. A related gap is exit criteria. As one user put it, `teach` "is good at making the next lesson, but not as good at knowing when to stop and switch to review or real practice." If you want review or drilling instead of new material, ask for it; the skill will not propose the switch on its own.
@@ -77,7 +74,7 @@ No to the first, and not reliably to the second. The skill designs lessons aroun
 No. Most reported use is outside coding: Korean, Japanese formal register, piano, guitar, board game design, OpenSCAD, film plots, Azure and CCNA certifications, university exams, and children of eight and ten getting printable books on escape rooms and fire salamanders. Nothing in the skill is specific to programming. Mission, resources, zone of proximal development and drill work the same way in any domain. Within code, users report the most value from getting oriented in an unfamiliar codebase or a new team's stack, more than from learning a language from scratch.
 
 **Which model should I run it with?**
-There is no canonical answer, and the reported differences are large. Users report that higher reasoning effort produces better lessons than the medium setting. One user ran the same skill through Copilot CLI with Codex and got a single 30-line HTML card where Claude Code produced a full lesson. It runs unmodified in Claude Cowork, if your organisation lets you add skills there. If the lessons come out thin, change model, harness or effort before rewriting your prompt.
+There is no canonical answer, and the reported differences are large. Users report that higher reasoning effort produces better lessons than the medium setting. If the lessons come out thin, change model or effort before rewriting your prompt.
 
 ## It's working if
 

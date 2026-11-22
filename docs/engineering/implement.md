@@ -6,13 +6,13 @@ It never reopens the plan. There is no interview, no clarifying round, no propos
 
 ## When to reach for it
 
-You invoke this by typing `/implement` yourself, and the agent won't reach for it on its own. It ships with `disable-model-invocation: true`, so no other skill can call it either. Wherever [ask-matt](./ask-matt.md) or [to-tickets](./to-tickets.md) says "then `/implement` per ticket", that is an instruction to you, not something the agent will do unprompted.
+You invoke this by typing `/implement` yourself, and the agent won't reach for it on its own. It is hidden from the agent's skill list (`opencode/autoinvoke: false`), so no other skill can call it either. Wherever [ask-matt](./ask-matt.md) or [to-tickets](./to-tickets.md) says "then `/implement` per ticket", that is an instruction to you, not something the agent will do unprompted.
 
 Where the work currently lives decides whether this is the right skill:
 
 | The work is… | Reach for |
 | --- | --- |
-| A ticket on the tracker | `/implement #42`, one ticket per session, clearing context between tickets |
+| A ticket on the tracker | `/implement #42`, one ticket per session, a fresh session (`/new`) between tickets |
 | A spec, not yet split up, and the build spans sessions | [to-tickets](./to-tickets.md) first, then `/implement` per ticket |
 | A spec, and the build is small | `/implement` directly against the spec |
 | Only in the conversation you just had, and it's still small | `/implement` right there, in the same window |
@@ -38,7 +38,7 @@ A run has five steps, in order:
 4. Run the full test suite once, at the end.
 5. Run [code-review](./code-review.md), then commit to the current branch.
 
-One run covers one ticket. The tickets [to-tickets](./to-tickets.md) produces are tracer-bullet vertical slices sized to fit a single fresh context window, so the intended rhythm is: clear context, implement one ticket, commit, clear again. Each ticket is self-contained, so you can discard the previous ticket's context.
+One run covers one ticket. The tickets [to-tickets](./to-tickets.md) produces are tracer-bullet vertical slices sized to fit a single fresh context window, so the intended rhythm is: start a fresh session with `/new`, implement one ticket, commit, then `/new` again. Each ticket is self-contained, so you can discard the previous ticket's context.
 
 ## Pre-agreed seams
 

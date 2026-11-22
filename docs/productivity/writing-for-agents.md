@@ -1,6 +1,6 @@
 ## What it does
 
-`writing-for-agents` is the reference for writing agent-facing documents: a skill, an `AGENTS.md` or `CLAUDE.md`, a spec, a runtime prompt, a README, any doc an agent reads. The format differs, but the writing does not. The same levers make each one predictable, so the agent follows the same *process* on every run (not necessarily to the same output).
+`writing-for-agents` is the reference for writing agent-facing documents: a skill, an `AGENTS.md`, a spec, a runtime prompt, a README, any doc an agent reads. The format differs, but the writing does not. The same levers make each one predictable, so the agent follows the same *process* on every run (not necessarily to the same output).
 
 Its default fix is to delete, not to explain. Ask an agent to write instructions for another agent and it spends most of its words explaining what the model already knows. Each of those lines is a **no-op**: it costs context and changes no behaviour. This reference helps you find them, so it is as useful on a document you already have as on a blank file.
 
@@ -8,7 +8,7 @@ It was called `writing-great-skills` until v1.1. The new name fits what it alway
 
 ## When to reach for it
 
-Type `/writing-for-agents`, or the agent reaches for it on its own when you're creating or editing a skill, or modifying `AGENTS.md` or `CLAUDE.md`.
+Load it with `@writing-for-agents`, or the agent reaches for it on its own when you're creating or editing a skill, or modifying `AGENTS.md`.
 
 Reach for it by hand for everything else an agent reads: your docs, specs and tickets, system and AFK prompts. The test is one question: does an agent read this? It does not matter how the agent gets the document: a pointer names it, a human pastes it, or it is in the repo. To find out what a codebase contains, use [grill-with-docs](../engineering/grill-with-docs.md). This reference controls how a document reads, not what it knows.
 
@@ -32,7 +32,7 @@ Once you think in these two loads, most authoring decisions (split or don't, inl
 ## Common questions
 
 **Where did `/writing-great-skills` go?**
-It is this skill, renamed in v1.1. Users pointed it at `AGENTS.md`, docs, specs, tickets and runtime prompts long before the rename. Structure, leading words and pruning apply to any text an agent reads. There is no alias. Reinstall under the new name.
+It is this skill, renamed in v1.1. Users pointed it at `AGENTS.md`, docs, specs, tickets and runtime prompts long before the rename. Structure, leading words and pruning apply to any text an agent reads. There is no alias.
 
 **"Writing for agents": so the agent does the writing?**
 The other way round. You are the author; the agent is the reader. That is what makes it hard. You write for a reader that has already read everything, so explanation is waste and precision is the whole job.
@@ -46,8 +46,8 @@ Agents told to "streamline" optimise for length, because length is the thing the
 **How do I know when it's done?**
 When it works, and you can no longer find duplication, sediment or no-ops. There is no automated eval. You check by running the document by hand and using the failure-mode vocabulary to diagnose problems. When a document misbehaves, the same vocabulary helps you fix it: name the failure mode first, then fix that.
 
-**Should this live in `CLAUDE.md` or somewhere else?**
-Ask which load you want to pay. `CLAUDE.md` loads into every session unconditionally. Material behind a pointer costs only the pointer's own line until it fires. Anything that applies in one session out of ten costs context load in the other nine.
+**Should this live in `AGENTS.md` or somewhere else?**
+Ask which load you want to pay. `AGENTS.md` loads into every session unconditionally. Material behind a pointer costs only the pointer's own line until it fires. Anything that applies in one session out of ten costs context load in the other nine.
 
 **Do I need to rewrite my documents for each new model?**
 Mostly no, and over-fitting to one model causes its own problems. Updating for a new model is usually another no-op pass rather than a rewrite.

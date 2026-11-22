@@ -6,7 +6,7 @@ It writes no test at a seam you have not agreed to first. Before any test exists
 
 ## When to reach for it
 
-Type `/tdd`, or the agent reaches for it automatically when a task fits: building a feature or fixing a bug test-first, or when you say "red-green-refactor".
+Load it with `@tdd`, or the agent reaches for it automatically when a task fits: building a feature or fixing a bug test-first, or when you say "red-green-refactor".
 
 Reach for it when there is a concrete behaviour to build, with an input and an observable output, and you want tests that survive a refactor.
 
@@ -18,11 +18,11 @@ Reach for it when there is a concrete behaviour to build, with an input and an o
 | You have a spec or tickets and want the whole build run for you | [implement](./implement.md), which drives `tdd` per ticket |
 | Config, wiring, glue, type annotations, straight CRUD delegation | Nothing here fits well; see the open gap below |
 
-That last row is a real gap. The skill decides *where* the seams go, but nothing in it decides *whether* a change is worth the loop at all. If you run it on a change with no independent source of truth to assert against, you get a test that restates the implementation. That is the tautological anti-pattern the skill warns about, reached from the other direction. It is [issue #746](https://github.com/mattpocock/skills/issues/746), and it is open. Until it closes, you make that call yourself, or write the rule into your `CLAUDE.md`.
+That last row is a real gap. The skill decides *where* the seams go, but nothing in it decides *whether* a change is worth the loop at all. If you run it on a change with no independent source of truth to assert against, you get a test that restates the implementation. That is the tautological anti-pattern the skill warns about, reached from the other direction. Nothing in the skill closes that gap today, so you make that call yourself, or write the rule into your `AGENTS.md`.
 
 ## Prerequisites
 
-[codebase-design](./codebase-design.md) needs to be installed. `tdd` used to carry its own deep-module and interface-design notes; v1.0 deleted them in favour of the shared skill, and `tdd` now uses its interface-design vocabulary. Nothing else; the skill is stateless and writes no files of its own.
+[codebase-design](./codebase-design.md) must be available (it ships in the same plugin). `tdd` used to carry its own deep-module and interface-design notes; v1.0 deleted them in favour of the shared skill, and `tdd` now uses its interface-design vocabulary. Nothing else; the skill is stateless and writes no files of its own.
 
 ## The loop, and the seam it runs at
 
@@ -48,11 +48,11 @@ Mocks are for system boundaries only: external APIs, time, randomness, sometimes
 
 **Why doesn't it refactor? The description says "red-green-refactor".**
 
-Because the refactor step was removed and the description was not. The removal was deliberate. Agents almost never did the step, and keeping implementation and review in separate sessions works better. Whether the result still counts as TDD by the book matters less than whether the loop produces better code. The mismatch between the trigger phrase and the body is filed as [issue #589](https://github.com/mattpocock/skills/issues/589) and is still open, so "red-green-refactor" continues to work as a phrase that fires the skill. What you get is red-green, with refactoring in [code-review](./code-review.md).
+Because the refactor step was removed and the description was not. The removal was deliberate. Agents almost never did the step, and keeping implementation and review in separate sessions works better. Whether the result still counts as TDD by the book matters less than whether the loop produces better code. The description still lists "red-green-refactor" as a trigger, so that phrase continues to fire the skill. What you get is red-green, with refactoring in [code-review](./code-review.md).
 
 **It asked me to choose a test seam and I had no idea which to pick.**
 
-This is the most-reported friction with the skill ([issue #607](https://github.com/mattpocock/skills/issues/607)). The prompt lists candidate seams by name only, with nothing about what each one catches or misses, so you are choosing between labels. There is no fix shipped yet. The practical workaround is to ask the agent for the trade-offs before answering: what does the component-level seam miss that the integration seam catches, and how much slower is it. It is also why the chain agrees seams up front in `to-spec`, where you have the whole feature in view rather than one prompt.
+The skill tells the agent to give each proposed seam a one-line note on what it catches and what it misses. If the agent lists only labels, you are choosing between names. Ask for the trade-offs before answering: what does the component-level seam miss that the integration seam catches, and how much slower is it. It is also why the chain agrees seams up front in `to-spec`, where you have the whole feature in view rather than one prompt.
 
 **It wrote the implementation before the test, even though the skill says red first.**
 
@@ -60,11 +60,11 @@ It happens. One user pushed the model on it and got an unusually honest answer: 
 
 **Should it write browser or end-to-end tests first?**
 
-Usually not, and the skill will not stop it. A user reported the agent writing a Playwright test first, then spending a long loop re-running it and concluding the *test* was broken for a feature that did not exist yet. Browser tests are slow enough that the red-green feedback loop stops paying for itself. State in your repo's `CLAUDE.md` that browser tests come after the behaviour works.
+Usually not, and the skill will not stop it. A user reported the agent writing a Playwright test first, then spending a long loop re-running it and concluding the *test* was broken for a feature that did not exist yet. Browser tests are slow enough that the red-green feedback loop stops paying for itself. State in your repo's `AGENTS.md` that browser tests come after the behaviour works.
 
-**Does `/tdd` replace `/implement`, or the course's `/do-work`?**
+**Does `/tdd` replace `/implement`?**
 
-No. `/tdd` documents the methodology; `/implement` is a simple work→feedback→commit loop and is the direct stand-in for `/do-work`. The course's single `/do-work` step is now split across `/implement`, `/tdd` and `/code-review`. If you are asking which one to run against a ticket, the answer is almost always `/implement`.
+No. `/tdd` documents the methodology; `/implement` is a simple work→feedback→commit loop. The build step is split across `/implement`, `/tdd` and `/code-review`. If you are asking which one to run against a ticket, the answer is almost always `/implement`.
 
 **Where did the deep-modules and interface-design guidance go?**
 
@@ -72,7 +72,7 @@ Into [codebase-design](./codebase-design.md) in v1.0, generalised so several ski
 
 **Does it know about my other tickets?**
 
-No. Run against one ticket, it can propose work that belongs to a sibling ticket, because it has no view of the rest of the issue graph ([issue #129](https://github.com/mattpocock/skills/issues/129)). This is not `tdd`'s job. Passing the spec alongside the ticket helps; right-sizing the tickets in the first place helps more.
+No. Run against one ticket, it can propose work that belongs to a sibling ticket, because it has no view of the rest of the issue graph. This is not `tdd`'s job. Passing the spec alongside the ticket helps; right-sizing the tickets in the first place helps more.
 
 ## It's working if
 

@@ -11,7 +11,7 @@ You invoke this by typing `/implement-spec`, and the agent won't reach for it on
 | Your situation | Reach for |
 | --- | --- |
 | A spec, split into tickets with blocking edges, that you want landed in one run | `/implement-spec` |
-| One ticket at a time, in your own context window, clearing between tickets | [implement](./implement.md) |
+| One ticket at a time, in your own context window, with a `/new` session between tickets | [implement](./implement.md) |
 | A spec that isn't split into tickets yet | [to-tickets](./to-tickets.md) first |
 | A small piece of work with no real graph to it | [implement](./implement.md) directly |
 
@@ -19,7 +19,7 @@ You invoke this by typing `/implement-spec`, and the agent won't reach for it on
 
 - **An issue tracker.** The skill reads the tickets from, and resolves them on, the tracker [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) configured. If none has been configured, it stops and tells you to run that first rather than guessing.
 - **Tickets with blocking edges**, as [to-tickets](./to-tickets.md) writes them. Without edges the graph is flat and every ticket starts at once.
-- **A harness that runs subagents in the background and gives each one a git worktree.** The skill exists to run tickets at the same time, so on a harness that runs subagents one at a time, it is only a slower `implement`.
+- **The `implementer` and `merger` agents.** [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) copies them into `.opencode/agents/` (or `~/.config/opencode/agents/`). If they are missing, the skill tells you to run that, or falls back to `general`. Each runs as a background subagent with a fresh context window through the `subagent` tool, which is how the frontier's tickets run at the same time. OpenCode's default nesting depth is 1 (`experimental.subagent_depth`), so a subagent cannot start subagents of its own.
 
 ## The integration branch
 
@@ -37,7 +37,7 @@ Implementers talk to the orchestrator through context pointers (the spec, the ti
 
 **How is this different from running `/implement` on each ticket myself?**
 
-This is the question the skill exists to answer. Before it shipped, people kept building their own versions, and one user described the need: they wanted "subagents implement the tickets" instead of having "to individually create new session and tell them to implement a ticket one by one, when a spec may contain over 5 tickets." With `implement` you are the dispatcher: one session per ticket, clearing in between, and keeping track yourself of which tickets are unblocked. `implement-spec` hands that job to one orchestrating session. The price is that you no longer read each ticket's work as it lands; you review the integration branch at the end. To start a run, clear the context and type `/implement-spec` with a pointer to the spec (an issue number or a file path). For a small change with no real graph, skip it and use `implement` directly.
+This is the question the skill exists to answer. Before it shipped, people kept building their own versions, and one user described the need: they wanted "subagents implement the tickets" instead of having "to individually create new session and tell them to implement a ticket one by one, when a spec may contain over 5 tickets." With `implement` you are the dispatcher: one session per ticket, starting a `/new` one in between, and keeping track yourself of which tickets are unblocked. `implement-spec` hands that job to one orchestrating session. The price is that you no longer read each ticket's work as it lands; you review the integration branch at the end. To start a run, open a `/new` session and type `/implement-spec` with a pointer to the spec (an issue number or a file path). For a small change with no real graph, skip it and use `implement` directly.
 
 **Does it need GitHub? I want it to stop at the branch.**
 
@@ -59,9 +59,9 @@ Worktrees don't remove collisions; they postpone them to merge time. A blocking 
 
 This is a known problem on GitHub. The tracker's blocked-by count only drops when a blocker *closes*, and tickets typically close when the PR merges, which is the end of the run. The tracker is the right source for the starting graph but a stale one mid-run. Tell the orchestrator to track which tickets have merged into the integration branch itself and compute the frontier from that.
 
-**Does this replace Sandcastle or an AFK script?**
+**Does this replace an AFK script?**
 
-No. People ask because the skills now reach into implementation: "is Sandcastle still relevant? Your skills now seem to be able to handle implementation as well." `implement-spec` puts an agent in charge of orchestration inside one harness session, which needs no infrastructure and lets you watch and steer. For work that is truly AFK, a deterministic loop ([Sandcastle](https://github.com/mattpocock/sandcastle), a shell script, a CI job) is faster, cheaper, and more reliable, because no agent makes the orchestration decisions.
+No. People ask because the skills now reach into implementation. `implement-spec` puts an agent in charge of orchestration inside one harness session, which needs no infrastructure and lets you watch and steer. For work that is truly AFK, a deterministic loop (a shell script, a CI job) is faster, cheaper, and more reliable, because no agent makes the orchestration decisions.
 
 **A ticket's key test was skipped inside its worktree, and it reported green.**
 

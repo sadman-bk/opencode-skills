@@ -1,6 +1,6 @@
 ## What it does
 
-`grill-me` takes a **loose idea** and interviews you until you can commit to it. You do not need a worked-out plan to start, because the session exists to produce one. It asks in **rounds**. Each round is the whole **frontier**, which is every question whose prerequisites you have already settled. So it never asks you something that depends on an answer it hasn't heard yet.
+`grill-me` takes a **loose idea** and interviews you until you can commit to it. You do not need a worked-out plan to start, because the session exists to produce one. It asks in **rounds**. Each round is the whole **frontier**, which is every question whose prerequisites you have already settled. So it never asks you something that depends on an answer it hasn't heard yet. Closed choices (yes/no, pick one from a short list) come up as OpenCode's native `question` prompt, and open questions arrive as text, since a list of options would narrow what you say.
 
 It is **stateless**. It writes no files and leaves no workspace behind. The only result is a clearer version of the idea, in your own head.
 
@@ -52,7 +52,7 @@ Count rounds, not questions. Forty-six questions across four rounds is an ordina
 Usually the scope was too large. Ask the agent to break the work into smaller pieces first, then grill each one. Very long sessions also drift into the **dumb zone**, where the context window is full enough that the questions get worse.
 
 **Can I go back to one question at a time?**
-Yes. Add this to your global `CLAUDE.md`:
+Yes. Add this to your global `AGENTS.md` (`~/.config/opencode/AGENTS.md`):
 
 ```
 When grilling, ask one question at a time.

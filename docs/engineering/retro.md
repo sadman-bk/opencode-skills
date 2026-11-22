@@ -19,7 +19,7 @@ Each candidate belongs to one category, and the category decides where the fix g
 | The agent took a long time to find a file or fact | A **navigation pointer** from a file it already reads |
 | It made a mistake a tool could have caught | An **automated check**: lint rule, type, test, pre-commit hook, CI job |
 | The reviewer missed a judgement-call mistake | A rule in `CODING_STANDARDS.md` for the reviewer agent |
-| `AGENTS.md` or `CLAUDE.md` is large | Move its steering out, into standards or checks |
+| `AGENTS.md` is large | Move its steering out, into standards or checks |
 | A tool call was expensive for what it returned | Streamline the tool, or replace it |
 | A steering file is full of lines that change nothing | Delete the **no-ops** |
 | The agent needed information it couldn't reach | Widen its access: tee the dev server log to a file, give read-only access to a service |
@@ -36,7 +36,7 @@ It waits. `retro` only proposes. Nothing changes until you pick a candidate, so 
 
 **Won't this pile up lint rules forever? Does it ever suggest removing one?**
 
-Partly, and this is its weakest spot. It can remove prose: no-ops in steering files, and steering in `AGENTS.md` or `CLAUDE.md` that belongs in standards or a check. It flags these for deletion when the files are large. It judges them against the one session it reads, so treat each one as a candidate for the deletion test, not a verdict. It does not audit the lint rules, hooks, or CI jobs it proposed last month. It sees one session, so it cannot tell you that a rule now fires too often or that the bug behind it is gone. You must still prune checks yourself. A rule that fires constantly on good code is the sign to remove it.
+Partly, and this is its weakest spot. It can remove prose: no-ops in steering files, and steering in `AGENTS.md` that belongs in standards or a check. It flags these for deletion when the files are large. It judges them against the one session it reads, so treat each one as a candidate for the deletion test, not a verdict. It does not audit the lint rules, hooks, or CI jobs it proposed last month. It sees one session, so it cannot tell you that a rule now fires too often or that the bug behind it is gone. You must still prune checks yourself. A rule that fires constantly on good code is the sign to remove it.
 
 **Won't it just invent generic advice to fill its categories?**
 
@@ -44,11 +44,11 @@ This is the strongest criticism of it. One user found that "once the job is fini
 
 **My session is long. Run it now, or start fresh?**
 
-By default it reviews the current session. That is the best case, because the struggles are still in the context window. If the session has already moved out of the smart zone, clear it, and point a fresh `/retro` at the previous session in the session logs.
+By default it reviews the current session. That is the best case, because the struggles are still in the context window. If the session has already moved out of the smart zone, start a fresh one with `/new` (the old one stays in `/sessions`), and point a fresh `/retro` at the previous session in the session logs.
 
-**The agent keeps making the same mistake. Should I add a line to `CLAUDE.md`?**
+**The agent keeps making the same mistake. Should I add a line to `AGENTS.md`?**
 
-Usually not, and `retro` pushes back on this more than anything else. A line in `CLAUDE.md` loads into every session, gives less weight to everything else in the file, and goes out of date as the code changes. If the mistake is mechanical, the fix is a check that fails. If it is a judgement call, it goes in the coding standards the reviewer reads. `AGENTS.md` and `CLAUDE.md` are for navigation pointers and little else. For the same reason, `retro` is not a memory system. It does not store what happened. It changes the environment so the mistake cannot happen again.
+Usually not, and `retro` pushes back on this more than anything else. A line in `AGENTS.md` loads into every session, gives less weight to everything else in the file, and goes out of date as the code changes. If the mistake is mechanical, the fix is a check that fails. If it is a judgement call, it goes in the coding standards the reviewer reads. `AGENTS.md` is for navigation pointers and little else. For the same reason, `retro` is not a memory system. It does not store what happened. It changes the environment so the mistake cannot happen again.
 
 **My setup mentions `CODING_STANDARDS.md` and I don't have one. Where does it come from?**
 

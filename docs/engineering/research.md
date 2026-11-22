@@ -22,19 +22,17 @@ The line between `research` and `grill-with-docs` is the **shelf life of what co
 
 ## Delegated legwork
 
-The reading runs as a **background agent**. You keep working while it follows each claim to its primary source, writes one Markdown file, and reports back. Research is legwork you delegate, not thinking you outsource. You get a document to grill, plan, or design against, and you still make the decision.
+The reading runs in the background, in the `researcher` subagent. You keep working while it follows each claim to its primary source, writes one Markdown file, and reports back. Research is legwork you delegate, not thinking you outsource. You get a document to grill, plan, or design against, and you still make the decision.
 
-Nothing stops the background agent from spawning another background agent of its own. This is the skill's best-documented problem.
+The skill checks where it is running. Started from a top-level session, it hands the reading to the `researcher` subagent, which always starts with a fresh context window. Started by another agent (a [wayfinder](./wayfinder.md) research ticket, say) or inside the `researcher` itself, it does the reading inline instead, because OpenCode allows only one level of subagent by default (`experimental.subagent_depth`).
 
 The repo decides where the file goes, not the skill. It follows whatever convention already exists for notes. If there is none, it picks a sensible place and tells you where. It writes one file per run.
 
 ## Common questions
 
-**It spawned a second research agent. Is that meant to happen?**
+**Can it start a second research agent from inside the first?**
 
-No. This is an open bug, [issue #530](https://github.com/mattpocock/skills/issues/530). The skill tells its caller to spin up a background agent but does not restrict the agent type. So the caller spawns a `general-purpose` agent, which has the `Agent` tool and the same instructions, and follows them again. One reporter measured a single research task costing roughly 450k tokens across three overlapping runs, and the duplicate finished half an hour later where the user could not see it. It also happens outside Claude Code. Users confirmed the same nesting in Codex with GPT-5.6-sol. There is no shipped fix. Users have patched their own installed copy with a line telling an agent that is already a subagent to do the work itself, That helps, but it is only an instruction, not a structural fix. After you invoke the skill, watch your background task list and stop the duplicate.
-
-The opposite failure also happens. If your own global instructions forbid an agent from re-delegating work, the background agent declines the task, and the skill does nothing without telling you.
+No. The `researcher` subagent does the reading itself, and the default depth limit of 1 means a subagent cannot start another. The skill says the same in so many words: when it is not running at top level, it works inline. The `researcher` agent is installed by [setup-matt-pocock-skills](./setup-matt-pocock-skills.md); if you skipped that step, the skill falls back to the built-in `general` agent.
 
 **Where should the file live, and should I commit it?**
 
@@ -58,16 +56,16 @@ The skill has no stopping criterion. This shows up as two complaints that look o
 
 **`/wayfinder` created research tickets. Do I resolve those myself?**
 
-No, it now fires them for you. In the unreleased changes since v1.1, a charting session spawns one `/research` subagent per research ticket and runs them in parallel. Each one records its findings on a throwaway `research/<name>` branch, with a context pointer from the ticket. Research tickets are the one exception to wayfinder's one-ticket-per-session rule, because they are AFK: nothing waits on you. One known problem: deleting the branch later breaks the context pointers in the tickets.
+No, it now fires them for you. A charting session spawns one `researcher` subagent per research ticket and runs them in parallel. Each one records its findings on a throwaway `research/<name>` branch, with a context pointer from the ticket. Research tickets are the one exception to wayfinder's one-ticket-per-session rule, because they are AFK: nothing waits on you. One known problem: deleting the branch later breaks the context pointers in the tickets.
 
 ## It's working if
 
 - Your own session keeps going. If you are sitting watching it read, the delegation didn't happen.
-- Exactly one new background task appears. A second one with a near-identical name is the nesting bug.
+- Exactly one `researcher` subagent runs in the background, and no second one appears beneath it.
 - One new Markdown file shows up, in the folder the repo already uses for notes, and the agent tells you the path.
 - Every claim in it carries a link, and following two at random lands you on an official doc, a spec, or the source file itself, not on someone's write-up of it.
 - You can make the decision you were stuck on from the file alone, without going back to the sources yourself.
 
 ## Where it fits
 
-`research` is a reach-for-it-anytime standalone. It feeds the thinking skills and is not a step in the build chain. You take its file *into* the flow. [grilling](../productivity/grilling.md) and [grill-with-docs](./grill-with-docs.md) ask sharper questions when they already have the facts, and [to-spec](./to-spec.md) can synthesise against it. [wayfinder](./wayfinder.md) is the one skill that invokes it directly. It resolves each research ticket on its map with a `/research` subagent. For the whole map, see [ask-matt](./ask-matt.md).
+`research` is a reach-for-it-anytime standalone. It feeds the thinking skills and is not a step in the build chain. You take its file *into* the flow. [grilling](../productivity/grilling.md) and [grill-with-docs](./grill-with-docs.md) ask sharper questions when they already have the facts, and [to-spec](./to-spec.md) can synthesise against it. [wayfinder](./wayfinder.md) is the one skill that invokes it directly. It resolves each research ticket on its map with a `researcher` subagent. For the whole map, see [ask-matt](./ask-matt.md).

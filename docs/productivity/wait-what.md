@@ -20,7 +20,7 @@ The skill says re-pitch **that**, not "that last message". What lost you is usua
 
 ## It plugs into the language you already have
 
-The body reuses the leading words already in your global `CLAUDE.md` and your project's `GLOSSARY.md`. ASD-STE100 Simplified Technical English sets the register. The ubiquitous language supplies the nouns. The skill, `CLAUDE.md` and `GLOSSARY.md` use the same tokens, so invoking it is not a new instruction. It is a reminder of one the agent already agreed to.
+The body reuses the leading words already in your global `AGENTS.md` and your project's `GLOSSARY.md`. ASD-STE100 Simplified Technical English sets the register. The ubiquitous language supplies the nouns. The skill, `AGENTS.md` and `GLOSSARY.md` use the same tokens, so invoking it is not a new instruction. It is a reminder of one the agent already agreed to.
 
 If you have no `GLOSSARY.md` (and no `GLOSSARY-MAP.md` pointing to one for the context at hand), the skill still works. You lose only the domain-vocabulary half.
 

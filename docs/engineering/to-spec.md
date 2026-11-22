@@ -23,7 +23,7 @@ Reach for it when the build is too big for one agent session and must be split a
 
 ## The spec is a decision record
 
-The spec exists because context windows end. You settled many things while grilling: the shape of the solution, the choices you argued through, and what you deliberately refused. All of that is in one conversation that you are about to clear. The spec keeps it.
+The spec exists because context windows end. You settled many things while grilling: the shape of the solution, the choices you argued through, and what you deliberately refused. All of that is in one conversation that you are about to leave behind with `/new`. The spec keeps it.
 
 So the spec does not validate or decide anything. It records what you decided, in your project's own vocabulary, so a fresh session can pick up the work without you explaining it again. If the spec states something you never said, that is a defect.
 
@@ -36,7 +36,7 @@ Other skills use those agreed seams later. [tdd](./tdd.md) works only at seams y
 ## Common questions
 
 **Where did `/to-prd` go?**
-It is this skill, renamed in v1.1. "Spec" is now the one term used throughout, and the old `to-prd` slug no longer works, so reinstall under the new name. The old vocabulary is replaced by the pair *spec* and *tickets*. The spec is the destination and the decisions that fix it. The tickets are the steps that get there. If you change direction, delete the unfinished tickets and keep the spec.
+It is this skill, renamed in v1.1. "Spec" is now the one term used throughout, and the old `to-prd` slug no longer works. The old vocabulary is replaced by the pair *spec* and *tickets*. The spec is the destination and the decisions that fix it. The tickets are the steps that get there. If you change direction, delete the unfinished tickets and keep the spec.
 
 **Why does the spec get the `ready-for-agent` label? I don't want an agent implementing off it.**
 The label means "no further triage needed": the document is complete enough for an agent to work from. It marks an input, not a work order. But AFK agents that poll for `ready-for-agent` cannot see that difference. They will try to build the whole spec in one run instead of picking up the ticket slices. This is the most-reported problem with the skill. Until it changes, exclude the parent spec explicitly in your AFK agent's prompt, or remove the label after `/to-tickets` has run.
@@ -60,7 +60,7 @@ Less well, and this is a known limitation. The template relies heavily on user s
 No to both. It reads and follows the ADRs for the area it touches, but it does not link them. It also does not search the tracker for overlapping issues before it writes, so a spec can duplicate work that someone already filed, and nothing warns you. If the area is busy, search the tracker yourself first.
 
 **`/to-tickets` couldn't read my spec: it kept truncating.**
-A tracker issue may not return a very large spec in full, and there is no local copy to use instead. To fix this, do not clear or compact between `/to-spec` and `/to-tickets`. Run them in the same window, and `/to-tickets` never has to fetch the spec again.
+A tracker issue may not return a very large spec in full, and there is no local copy to use instead. To fix this, do not start a new session (`/new`) or let the context compact between `/to-spec` and `/to-tickets`. Run them in the same window, and `/to-tickets` never has to fetch the spec again.
 
 ## It's working if
 
