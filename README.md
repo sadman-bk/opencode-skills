@@ -23,7 +23,7 @@ Add the plugin to `opencode.jsonc` (project) or `~/.config/opencode/opencode.jso
 }
 ```
 
-OpenCode reloads config without a restart, and checks a git branch ref for updates at startup and every 24 hours, so the plugin updates itself. Pin a tag or commit (`#v1.3.2`) to stop that. The `buckets` option (default `["engineering", "productivity"]`) opts in to the `in-progress` and `misc` skills. See [.agents/install-block.md](./.agents/install-block.md) for options and name collisions.
+OpenCode reloads config without a restart, and checks a git branch ref for updates at startup and every 24 hours, so the plugin updates itself. Pin a tag or commit (`#v2.0.0`) to stop that. The `buckets` option (default `["engineering", "productivity"]`) opts in to the `in-progress` and `misc` skills, `commands` (`"all"`, `"user-invoked"`, `"none"`) controls which skills get a slash command, and `exclude` skips skill IDs. See [.agents/install-block.md](./.agents/install-block.md) for options and name collisions.
 
 ### 2. Run `/setup-skills`
 

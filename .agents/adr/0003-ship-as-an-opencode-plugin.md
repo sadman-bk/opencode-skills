@@ -7,7 +7,7 @@ This repo targets OpenCode v2 only. Earlier versions shipped as a Claude Code pl
 Ship one OpenCode server plugin, `plugin/index.js`, as the package's `exports["."]` entry. At startup it:
 
 - reads `skills/<bucket>/**/SKILL.md` for the promoted buckets (`engineering`, `productivity`) and registers each through `ctx.skill.transform`;
-- registers a slash command per user-invoked skill through `ctx.command.transform`. The command adds the skill to the prompt, which is what typing `@skill-id` does, so `/to-spec` and `@to-spec` behave the same.
+- registers a slash command per skill through `ctx.command.transform` (option `commands`: `"all"`, `"user-invoked"` or `"none"`). The command adds the skill to the prompt, which is what typing `@skill-id` does, so `/to-spec` and `@to-spec` behave the same.
 
 Users install it with a git ref in their `opencode.jsonc`. A branch ref is checked for updates at startup and every 24 hours, so there is no manual update step and no version file to sync.
 
@@ -29,4 +29,4 @@ Users install it with a git ref in their `opencode.jsonc`. A branch ref is check
 - Every promoted skill lives in `skills/engineering/` or `skills/productivity/` and appears in its bucket `README.md`. `npm run check` fails otherwise.
 - The plugin's frontmatter reader and a strict YAML parser must agree on every skill. `npm run check` fails otherwise.
 
-Supersedes ADR 0002, which recorded the Claude Code plugin decision.
+Supersedes ADR 0002, which recorded the Claude Code plugin decision. That file was deleted in this migration; it remains in git history.

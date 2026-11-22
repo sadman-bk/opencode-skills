@@ -23,7 +23,7 @@ OpenCode reloads config without a restart. Then run `/setup-skills` once per rep
 
 </canonical-block>
 
-A git branch ref is checked for updates at startup and every 24 hours, so the plugin updates itself. Pin a tag or commit (`#v1.3.2`) to stop that. `opencode plugin update` forces a check.
+A git branch ref is checked for updates at startup and every 24 hours, so the plugin updates itself. Pin a tag or commit (`#v2.0.0`) to stop that. `opencode plugin update` forces a check.
 
 ## Options
 
@@ -40,7 +40,9 @@ A git branch ref is checked for updates at startup and every 24 hours, so the pl
 ## What you get
 
 - Every model-invoked skill appears in the model's skill list, and loads when a task fits.
-- Every user-invoked skill is hidden from the model, and has a slash command (`/to-spec`) and an `@to-spec` mention.
+- Every user-invoked skill is hidden from the model.
+- Every skill has a slash command (`/to-spec`, `/tdd`) and an `@to-spec` mention. Set `"commands": "user-invoked"` to register commands only for the hidden skills, or `"none"` for no commands.
+- Set `"exclude": ["code-review"]` to skip skills you already install from elsewhere.
 - Agent definitions in `agents/` are copied into your project by `setup-skills`. A plugin cannot register agents, so this step is a copy.
 
 ## Local checkout (maintainers)
@@ -51,6 +53,6 @@ A git branch ref is checked for updates at startup and every 24 hours, so the pl
 
 ## Name collisions
 
-A skill ID is its directory name. If you already have a skill with the same ID in `.opencode/skills/` or `~/.config/opencode/skills/`, yours wins by precedence and shadows the plugin's. Rename yours, or remove it.
+A skill ID is its directory name. If you already have a skill with the same ID in `.opencode/skills/` or `~/.config/opencode/skills/`, yours wins by precedence and shadows the plugin's. Rename yours, remove it, or add its ID to the plugin's `exclude` option.
 
 Use the single-skill wording wherever one skill is named on its own: "run `/<name>`" for a user-invoked skill, "load `<name>`" for a model-invoked one. `docs/` pages don't repeat the install block. See [writing-docs.md](./writing-docs.md).

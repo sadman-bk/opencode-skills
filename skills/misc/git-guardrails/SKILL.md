@@ -28,14 +28,20 @@ Ask the user: install for **this project only** (`opencode.jsonc` in the repo ro
 Read the target file (it may be `.jsonc`, so keep comments). Add this to its `permissions` array, creating the array if absent. Append at the **end**: the last matching rule wins, so a deny that sits after a broad allow still applies. Don't overwrite other settings, and skip any rule already present.
 
 ```jsonc
-{ "action": "shell", "resource": "git push", "effect": "deny" },
 { "action": "shell", "resource": "git push *", "effect": "deny" },
-{ "action": "shell", "resource": "git * push *", "effect": "deny" },
-{ "action": "shell", "resource": "git reset --hard *", "effect": "deny" },
-{ "action": "shell", "resource": "git clean -f*", "effect": "deny" },
-{ "action": "shell", "resource": "git branch -D *", "effect": "deny" },
+{ "action": "shell", "resource": "git -* push *", "effect": "deny" },
+{ "action": "shell", "resource": "git reset --hard*", "effect": "deny" },
+{ "action": "shell", "resource": "git -* reset --hard*", "effect": "deny" },
+{ "action": "shell", "resource": "git clean *-f*", "effect": "deny" },
+{ "action": "shell", "resource": "git -* clean *-f*", "effect": "deny" },
+{ "action": "shell", "resource": "git branch *-D *", "effect": "deny" },
+{ "action": "shell", "resource": "git branch *--delete --force*", "effect": "deny" },
+{ "action": "shell", "resource": "git -* branch *-D *", "effect": "deny" },
 { "action": "shell", "resource": "git checkout .", "effect": "deny" },
-{ "action": "shell", "resource": "git restore .", "effect": "deny" }
+{ "action": "shell", "resource": "git checkout -- .", "effect": "deny" },
+{ "action": "shell", "resource": "git checkout -f*", "effect": "deny" },
+{ "action": "shell", "resource": "git restore .", "effect": "deny" },
+{ "action": "shell", "resource": "git restore -- .", "effect": "deny" }
 ```
 
 If the file has no `$schema`, add `"$schema": "https://opencode.ai/config.json"`.

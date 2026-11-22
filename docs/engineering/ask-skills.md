@@ -54,7 +54,7 @@ People keep asking for one in the README. This skill is that list. A static tabl
 
 **It told me half the skills aren't installed.**
 
-Most of the skills the router routes you through are user-invoked (`opencode/autoinvoke: false`), which means OpenCode leaves them out of the skill list it shows the model and registers a slash command for each instead. The agent can read the list it sees as exhaustive and report them missing. Seventeen of the plugin's twenty-seven promoted skills are user-invoked, so this is the common case rather than an edge. They are installed. Type the slash command anyway (`/to-spec`, `/to-tickets`), or load the skill with `@to-spec`.
+Most of the skills the router routes you through are user-invoked (`opencode/autoinvoke: false`), which means OpenCode leaves them out of the skill list it shows the model. The plugin registers a slash command for every skill either way. The agent can read the list it sees as exhaustive and report them missing. Seventeen of the plugin's twenty-seven promoted skills are user-invoked, so this is the common case rather than an edge. They are installed. Type the slash command anyway (`/to-spec`, `/to-tickets`), or load the skill with `@to-spec`.
 
 **It described a skill's behaviour, and the skill doesn't do that.**
 

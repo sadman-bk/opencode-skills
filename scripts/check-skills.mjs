@@ -4,10 +4,11 @@
 // plugin's lightweight parser reads the same values as a real YAML parser.
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
 import { parseSkill } from "../plugin/frontmatter.js";
 
-const root = new URL("../skills/", import.meta.url).pathname;
+const root = fileURLToPath(new URL("../skills/", import.meta.url));
 const errors = [];
 const ids = new Map();
 

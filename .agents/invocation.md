@@ -1,6 +1,6 @@
 # Model-invoked vs user-invoked
 
-Every `SKILL.md` in this repo is a skill. The one axis that splits them is **invocation**, who can reach it:
+Every `SKILL.md` in this repo is a skill. The plugin registers a slash command named after each skill's ID (`/to-spec`, `/tdd`), whichever kind it is, unless the user sets the `commands` option to `"user-invoked"` or `"none"`. The one axis that splits skills is **invocation**, who can reach it:
 
 - **User-invoked**: reachable **only by the human**, through a slash command (`/to-spec`) or an `@to-spec` mention. Set this in the frontmatter:
 
@@ -9,8 +9,8 @@ Every `SKILL.md` in this repo is a skill. The one axis that splits them is **inv
     opencode/autoinvoke: false
   ```
 
-  This hides the skill from the model's skill list. The plugin then registers a slash command with the same name as the skill's ID. The `description` is **human-facing**: a one-line summary read by a person browsing slash commands. Strip trigger lists ("Use when the user says…"). If the skill takes arguments, add `argument-hint: "…"` under `metadata:` and the plugin appends it to the command description.
-- **Model-invoked**: reachable by **model or user**. The default: omit the `metadata` block. The `description` is **model-facing** and keeps rich trigger phrasing ("Use when the user wants…, mentions…, asks for…") so auto-invocation fires. The test for whether a skill should stay model-invoked: _could the model usefully reach for this autonomously?_ (Reuse is the reason to extract a skill, not the test.)
+  This hides the skill from the model's skill list. The `description` is **human-facing**: a one-line summary read by a person browsing slash commands. Strip trigger lists ("Use when the user says…"). If the skill takes arguments, add `argument-hint: "…"` under `metadata:` and the plugin appends it to the command description.
+- **Model-invoked**: reachable by **model or user** (`/tdd`, `@tdd`, or the model loading it). The default: omit the `metadata` block. The `description` is **model-facing** and keeps rich trigger phrasing ("Use when the user wants…, mentions…, asks for…") so auto-invocation fires. The test for whether a skill should stay model-invoked: _could the model usefully reach for this autonomously?_ (Reuse is the reason to extract a skill, not the test.)
 
 A user-invoked skill is not in the model's list, so no other skill can reach it by name. A user-invoked skill may invoke model-invoked skills, but it can never reach another user-invoked skill.
 

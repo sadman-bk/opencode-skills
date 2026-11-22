@@ -25,10 +25,10 @@ Use the `implementer` agent for implementer subagents and the `merger` agent for
 
 2. (optional) Use an **exploration subagent** to conduct any exploration required by the tickets - relevant codebase files or external documentation. Ensure the exploration subagent can save files - it should save its markdown notes in a directory outside the repo, accessible by all future subagents. This lets **implementer subagents** focus on implementation rather than exploration.
 
-3. Create the integration branch. If the issue tracker closes work through PRs, or the user asks for one, open a draft PR after the first merge in step 5 (a branch with no commits ahead of main can't open one), marked as closing the spec and tickets.
+3. Create the integration branch and keep it checked out in your own (main) worktree: merges land there. If the issue tracker closes work through PRs, or the user asks for one, open a draft PR after the first merge in step 5 (a branch with no commits ahead of main can't open one), marked as closing the spec and tickets.
 
 4. Use a fresh **implementer subagent** for each ticket, each in its own worktree on its own branch. Each implementer subagent:
-   - creates its worktree with OpenCode's `worktree_create` tool (named after the ticket), then moves its own session into it with `session_move`, doing no repo work until a later call;
+   - creates its worktree with `worktree_create` (named after the ticket), then moves its own session into it with `session_move`, both from OpenCode's `opencode` Code Mode namespace (called through `execute`), doing no repo work until a later call;
    - creates its ticket branch from the integration branch tip (a new worktree can start on a detached HEAD), or resets onto that tip if the branch exists;
    - calls the Skill tool with `tdd` to build the ticket;
    - merges the integration branch tip into its own branch before reporting done
@@ -41,4 +41,4 @@ Use the `implementer` agent for implementer subagents and the `merger` agent for
 
 8. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes work, and report the integration branch.
 
-9. Clean up all **implementer subagent** worktrees with `worktree_remove` (list them with `worktree_list`).
+9. Clean up all **implementer subagent** worktrees with `worktree_remove` from the same `opencode` namespace (find them with `worktree_list`).
