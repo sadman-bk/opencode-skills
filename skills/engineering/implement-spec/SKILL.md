@@ -13,11 +13,11 @@ The goal is the entire spec implemented on a single **integration branch**, with
 
 The tickets are not a list of steps. They are a **task graph** with blocking relationships between them. This means there is always a **frontier** of tickets which are ready to be grabbed.
 
-Start every subagent with a fresh context window.
+Use the `subagent` tool. Every subagent starts with a fresh context window, runs in the background, and cannot start subagents of its own (OpenCode's default nesting depth is 1).
 
 Communication to and from subagents should be sparse. Communicate primarily through **context pointers**: to the spec, tickets, research notes, and previous commits. Don't duplicate information already available via pointers.
 
-**Implementer subagents** should be run in the background where possible for maximum concurrency.
+Use the `implementer` agent for implementer subagents and the `merger` agent for merger subagents; make as many `subagent` calls as the frontier allows in one turn for maximum concurrency. If those agents are not installed, run `/setup-matt-pocock-skills`, or use `general`.
 
 ## Steps
 
