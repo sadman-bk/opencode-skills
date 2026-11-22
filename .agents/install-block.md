@@ -1,6 +1,6 @@
 # The canonical install block
 
-One install story, one wording. `README.md`, `.changeset/*`, and every page under `docs/` must say **this** and nothing else. Change it here first, then propagate.
+One install story, one wording. `README.md` and `.changeset/*` must say **this** and nothing else. Change it here first, then propagate.
 
 OpenCode v2 is the only supported harness, and it installs plugins from a config file, so there is a single route.
 
@@ -48,11 +48,11 @@ A git branch ref is checked for updates at startup and every 24 hours, so the pl
 ## Local checkout (maintainers)
 
 ```jsonc
-{ "plugins": [{ "package": "/absolute/path/to/matt-opencode-skills", "options": {} }] }
+{ "plugins": [{ "package": "/absolute/path/to/opencode-skills", "options": {} }] }
 ```
 
 ## Name collisions
 
 A skill ID is its directory name. If you already have a skill with the same ID in `.opencode/skills/` or `~/.config/opencode/skills/`, yours wins by precedence and shadows the plugin's. Rename yours, remove it, or add its ID to the plugin's `exclude` option.
 
-Use the single-skill wording wherever one skill is named on its own: "run `/<name>`" for a user-invoked skill, "load `<name>`" for a model-invoked one. `docs/` pages don't repeat the install block. See [writing-docs.md](./writing-docs.md).
+Use the single-skill wording wherever one skill is named on its own: "run `/<name>`" for a user-invoked skill, "load `<name>`" for a model-invoked one.

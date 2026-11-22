@@ -63,14 +63,14 @@ function basename(dir) {
 }
 
 export default {
-  id: "matt-skills",
+  id: "opencode-skills",
 
   async setup(ctx) {
     const buckets = Array.isArray(ctx.options?.buckets) ? ctx.options.buckets : DEFAULT_BUCKETS;
     const commands = COMMAND_MODES.includes(ctx.options?.commands) ? ctx.options.commands : "all";
     const exclude = new Set(Array.isArray(ctx.options?.exclude) ? ctx.options.exclude : []);
     const skills = loadSkills(buckets, ROOT, (path, error) =>
-      console.error(`[matt-skills] skipped ${path}: ${error?.message ?? error}`),
+      console.error(`[opencode-skills] skipped ${path}: ${error?.message ?? error}`),
     ).filter((skill) => !exclude.has(skill.id));
 
     await ctx.skill.transform((editor) => {
