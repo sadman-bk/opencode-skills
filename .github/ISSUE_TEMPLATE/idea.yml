@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        This repo is curated. An idea stays open only if it clears **both** parts of the bar in [`SCOPE.md`](https://github.com/sadman-bk/matt-opencode-skills/blob/main/SCOPE.md):
+        This repo is curated. An idea stays open only if it clears **both** parts of the bar in [`SCOPE.md`](https://github.com/sadman-bk/opencode-skills/blob/main/SCOPE.md):
 
         1. **Observed failure**: it describes something that went wrong in a real session, not a hypothetical improvement.
         2. **Fits the philosophy**: it doesn't repeat a past rejection, and it isn't a config option, or a personal-workflow tweak.

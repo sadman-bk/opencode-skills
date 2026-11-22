@@ -14,7 +14,7 @@ Add the plugin to `opencode.jsonc` (project) or `~/.config/opencode/opencode.jso
 {
   "$schema": "https://opencode.ai/config.json",
   "plugins": [
-    { "package": "github:sadman-bk/matt-opencode-skills#main", "options": {} }
+    { "package": "github:sadman-bk/opencode-skills#main", "options": {} }
   ]
 }
 ```
@@ -30,7 +30,7 @@ A git branch ref is checked for updates at startup and every 24 hours, so the pl
 <canonical-block name="options">
 
 ```jsonc
-{ "package": "github:sadman-bk/matt-opencode-skills#main", "options": { "buckets": ["engineering", "productivity", "in-progress"] } }
+{ "package": "github:sadman-bk/opencode-skills#main", "options": { "buckets": ["engineering", "productivity", "in-progress"] } }
 ```
 
 `buckets` defaults to `["engineering", "productivity"]`. Add `in-progress` or `misc` to opt in to skills that are not promoted.

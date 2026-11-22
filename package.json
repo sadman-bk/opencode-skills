@@ -5,7 +5,7 @@
   "description": "Engineering and productivity skills for OpenCode v2, shipped as a native OpenCode plugin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sadman-bk/matt-opencode-skills"
+    "url": "https://github.com/sadman-bk/opencode-skills"
   },
   "license": "MIT",
   "type": "module",

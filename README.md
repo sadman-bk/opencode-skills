@@ -18,7 +18,7 @@ Add the plugin to `opencode.jsonc` (project) or `~/.config/opencode/opencode.jso
 {
   "$schema": "https://opencode.ai/config.json",
   "plugins": [
-    { "package": "github:sadman-bk/matt-opencode-skills#main", "options": {} }
+    { "package": "github:sadman-bk/opencode-skills#main", "options": {} }
   ]
 }
 ```

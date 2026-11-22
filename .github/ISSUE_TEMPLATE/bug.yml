@@ -7,7 +7,7 @@ body:
       value: |
         Keep it short and put the repro first. If an agent wrote this for you, cut it down to the repro before you post.
 
-        Bugs in `skills/misc/` are not fixed (see [`SCOPE.md`](https://github.com/sadman-bk/matt-opencode-skills/blob/main/SCOPE.md)).
+        Bugs in `skills/misc/` are not fixed (see [`SCOPE.md`](https://github.com/sadman-bk/opencode-skills/blob/main/SCOPE.md)).
   - type: input
     id: skill
     attributes:
