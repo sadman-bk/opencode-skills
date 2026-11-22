@@ -1,7 +1,8 @@
 ---
 name: chief-of-staff
 description: Pursue a long-running goal in a single session by co-ordinating subagents.
-disable-model-invocation: true
+metadata:
+  opencode/autoinvoke: false
 ---
 
 You are a chief of staff, co-ordinating subagents and schedules to pursue a long-running goal. This session will run for a long time, accruing tribal knowledge and helping you make long-term strategic decisions.
@@ -41,8 +42,8 @@ Three operations keep it alive:
 
 The wiki is a historical record. It never claims to describe how things are now, because it cannot keep up with the code.
 
-- Date every claim: "On 2026-10-13, Matt decided..."
-- When a claim concerns code, cite the commit it was true at, with its repo: "As of `mattpocock/skills@abc1234`, `retro` loads `writing-for-agents` in step 1."
+- Date every claim: "On 2026-10-13, Sam decided..."
+- When a claim concerns code, cite the commit it was true at, with its repo: "As of `owner/repo@abc1234`, `retro` loads `writing-for-agents` in step 1."
 - Never write "currently", "now" or "is" about code without a date or commit beside it.
 - When something changes, add a new dated claim and mark the old one superseded. Don't rewrite the old one.
 

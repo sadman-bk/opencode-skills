@@ -5,9 +5,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Keep it short and put the repro first. If an agent wrote this for you, cut it down to the repro before you post. See [CONTRIBUTING.md](https://github.com/mattpocock/skills/blob/main/CONTRIBUTING.md).
+        Keep it short and put the repro first. If an agent wrote this for you, cut it down to the repro before you post.
 
-        Bugs in `skills/misc/` are not fixed (see [`.out-of-scope/frozen-misc-skills.md`](https://github.com/mattpocock/skills/blob/main/.out-of-scope/frozen-misc-skills.md)). Installer problems with `npx skills` belong at skills.sh.
+        Bugs in `skills/misc/` are not fixed (see [`SCOPE.md`](https://github.com/sadman-bk/opencode-skills/blob/main/SCOPE.md)).
   - type: input
     id: skill
     attributes:
@@ -19,15 +19,15 @@ body:
     id: version
     attributes:
       label: Version or commit
-      description: The plugin version, or the commit SHA you installed from. Many bugs are already fixed on `main`.
-      placeholder: 1.3.1, or 4588b32
+      description: The plugin version (`package.json`), or the commit SHA you installed from. Many bugs are already fixed on `main`.
+      placeholder: 2.0.0, or 4588b32
     validations:
       required: true
   - type: input
-    id: harness
+    id: opencode-version
     attributes:
-      label: Harness and version
-      description: e.g. Claude Code 2.3.1, Codex CLI 0.40, Cursor. Say how you installed (plugin or skills.sh).
+      label: OpenCode version
+      description: Output of `opencode --version`, e.g. 2.3.2. Say whether the plugin came from a git ref, a local path, or `buckets` overrides.
     validations:
       required: true
   - type: input

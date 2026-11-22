@@ -1,22 +1,23 @@
 ---
 name: implement-spec
 description: "Implement the result of /to-spec and /to-tickets in code."
-disable-model-invocation: true
+metadata:
+  opencode/autoinvoke: false
 ---
 
 You have been provided a spec. This spec should have tickets associated with it, describing how to implement the spec.
 
-The issue tracker should have been provided to you. If not, tell the user to run `/setup-matt-pocock-skills`.
+The issue tracker should have been provided to you. If not, tell the user to run `/setup-skills`.
 
 The goal is the entire spec implemented on a single **integration branch**, with every ticket resolved the way the issue tracker closes work.
 
 The tickets are not a list of steps. They are a **task graph** with blocking relationships between them. This means there is always a **frontier** of tickets which are ready to be grabbed.
 
-Start every subagent with a fresh context window.
+Use the `subagent` tool. Every subagent starts with a fresh context window, runs in the background, and cannot start subagents of its own (OpenCode's default nesting depth is 1).
 
 Communication to and from subagents should be sparse. Communicate primarily through **context pointers**: to the spec, tickets, research notes, and previous commits. Don't duplicate information already available via pointers.
 
-**Implementer subagents** should be run in the background where possible for maximum concurrency.
+Use the `implementer` agent for implementer subagents and the `merger` agent for merger subagents; make as many `subagent` calls as the frontier allows in one turn for maximum concurrency. If those agents are not installed, run `/setup-skills`, or use `general`.
 
 ## Steps
 
@@ -24,10 +25,11 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 2. (optional) Use an **exploration subagent** to conduct any exploration required by the tickets - relevant codebase files or external documentation. Ensure the exploration subagent can save files - it should save its markdown notes in a directory outside the repo, accessible by all future subagents. This lets **implementer subagents** focus on implementation rather than exploration.
 
-3. Create the integration branch. If the issue tracker closes work through PRs, or the user asks for one, open a draft PR after the first merge in step 5 (a branch with no commits ahead of main can't open one), marked as closing the spec and tickets.
+3. Create the integration branch and keep it checked out in your own (main) worktree: merges land there. If the issue tracker closes work through PRs, or the user asks for one, open a draft PR after the first merge in step 5 (a branch with no commits ahead of main can't open one), marked as closing the spec and tickets.
 
 4. Use a fresh **implementer subagent** for each ticket, each in its own worktree on its own branch. Each implementer subagent:
-   - confirms its worktree is based on the integration branch before starting, and resets onto it if not;
+   - creates its worktree with `worktree_create` (named after the ticket), then moves its own session into it with `session_move`, both from OpenCode's `opencode` Code Mode namespace (called through `execute`), doing no repo work until a later call;
+   - creates its ticket branch from the integration branch tip (a new worktree can start on a detached HEAD), or resets onto that tip if the branch exists;
    - calls the Skill tool with `tdd` to build the ticket;
    - merges the integration branch tip into its own branch before reporting done
 
@@ -39,4 +41,4 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 8. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes work, and report the integration branch.
 
-9. Clean up all **implementer subagent** worktrees.
+9. Clean up all **implementer subagent** worktrees with `worktree_remove` from the same `opencode` namespace (find them with `worktree_list`).
