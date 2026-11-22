@@ -16,7 +16,7 @@ Which of the three grilling skills you want depends on what is in front of you:
 - **A codebase to align against.** Use [grill-with-docs](../engineering/grill-with-docs.md). It is the same interview, but stateful: it reads your code and keeps what it learns in `GLOSSARY.md` and ADRs.
 - **Too big for one session.** Use [wayfinder](../engineering/wayfinder.md). It charts the effort as a map and runs grilling sessions inside it.
 
-Leave plan mode off. Plan mode makes the agent hurry to produce a plan, when you want it to keep asking questions.
+Run it on the `build` agent, not the built-in `plan` agent. `plan` is built to explore and hand back a plan, when you want the agent to keep asking questions.
 
 ## It's a conversation, not an interview
 

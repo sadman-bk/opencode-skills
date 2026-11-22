@@ -28,7 +28,8 @@ Use the `implementer` agent for implementer subagents and the `merger` agent for
 3. Create the integration branch. If the issue tracker closes work through PRs, or the user asks for one, open a draft PR after the first merge in step 5 (a branch with no commits ahead of main can't open one), marked as closing the spec and tickets.
 
 4. Use a fresh **implementer subagent** for each ticket, each in its own worktree on its own branch. Each implementer subagent:
-   - confirms its worktree is based on the integration branch before starting, and resets onto it if not;
+   - creates its worktree with OpenCode's `worktree_create` tool (named after the ticket), then moves its own session into it with `session_move`, doing no repo work until a later call;
+   - creates its ticket branch from the integration branch tip (a new worktree can start on a detached HEAD), or resets onto that tip if the branch exists;
    - calls the Skill tool with `tdd` to build the ticket;
    - merges the integration branch tip into its own branch before reporting done
 
@@ -40,4 +41,4 @@ Use the `implementer` agent for implementer subagents and the `merger` agent for
 
 8. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes work, and report the integration branch.
 
-9. Clean up all **implementer subagent** worktrees.
+9. Clean up all **implementer subagent** worktrees with `worktree_remove` (list them with `worktree_list`).

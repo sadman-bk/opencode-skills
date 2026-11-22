@@ -25,7 +25,7 @@ You invoke this by typing `/implement-spec`, and the agent won't reach for it on
 
 Everything lands on one branch. Each implementer:
 
-1. confirms its worktree is based on the integration branch before it starts,
+1. creates its own worktree with OpenCode's `worktree_create` tool, moves its session into it, and confirms it is based on the integration branch before it starts,
 2. builds its ticket with [tdd](./tdd.md), red-green one slice at a time,
 3. merges the integration branch tip into its own branch before reporting done, so landing it is a fast-forward.
 

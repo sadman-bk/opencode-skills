@@ -121,7 +121,7 @@ For "other" issue trackers, write `docs/agents/issue-tracker.md` from scratch us
 
 The engineering skills delegate to four subagents shipped with this plugin as markdown files in its `agents/` directory (relative to this skill's base directory, that is `../../../agents/`). A plugin cannot register agents, so they must be copied. Ask with the `question` tool where to put them:
 
-- **This project**: `.opencode/agents/` (recommended; commit it so collaborators get them)
+- **This project**: `.opencode/agents/` (recommended). It must be committed: `implement-spec` implementers move into fresh git worktrees, which hold only tracked files, and an uncommitted agent is "not found" there
 - **All projects**: `~/.config/opencode/agents/`
 - **Skip**: the skills fall back to the built-in `general` agent
 
