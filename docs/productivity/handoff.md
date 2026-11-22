@@ -17,7 +17,7 @@ There are four triggers, and only four:
 | Sending the work to a colleague | They need something they can read |
 | Forking a side task found mid-phase | You keep working; a second agent takes the fork |
 
-For anything else (same model, same directory, you are done grilling and moving to implementation), let compaction handle it. [ask-matt](../engineering/ask-matt.md) has the ordered tree over all five options at a phase boundary.
+For anything else (same model, same directory, you are done grilling and moving to implementation), let compaction handle it. [ask-skills](../engineering/ask-skills.md) has the ordered tree over all five options at a phase boundary.
 
 ## Branching is the use people skip
 
@@ -70,4 +70,4 @@ Both work; they suit different situations. As a skill, it ships through the plug
 
 ## Where it fits
 
-`handoff` is a **reach-for-it-anytime standalone**. It works between sessions rather than inside a build chain. It is a narrow one, and you'll use it less often than the other four options at a phase boundary. Its closest neighbour is [prototype](../engineering/prototype.md), because a prototype lives in its own directory and the round trip out and back is the move this skill is for. When you're at a boundary and unsure whether to continue, start a `/new` session, hand off, delegate or compact, [ask-matt](../engineering/ask-matt.md) has the tree that orders those five, and routes you across the rest of the set.
+`handoff` is a **reach-for-it-anytime standalone**. It works between sessions rather than inside a build chain. It is a narrow one, and you'll use it less often than the other four options at a phase boundary. Its closest neighbour is [prototype](../engineering/prototype.md), because a prototype lives in its own directory and the round trip out and back is the move this skill is for. When you're at a boundary and unsure whether to continue, start a `/new` session, hand off, delegate or compact, [ask-skills](../engineering/ask-skills.md) has the tree that orders those five, and routes you across the rest of the set.

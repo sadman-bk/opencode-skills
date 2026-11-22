@@ -33,4 +33,4 @@ If you have no `GLOSSARY.md` (and no `GLOSSARY-MAP.md` pointing to one for the c
 
 ## Where it fits
 
-You can use `wait-what` at any point, in any conversation, inside any other skill. It repairs one message after the fact. The real fix is a shared language agreed upfront, and that is [grill-with-docs](../engineering/grill-with-docs.md): a grilling session that runs [domain-modeling](../engineering/domain-modeling.md) as it goes, so it records the words you both use in your `GLOSSARY.md`. If you're unsure which skill fits the moment, [ask-matt](../engineering/ask-matt.md) routes you.
+You can use `wait-what` at any point, in any conversation, inside any other skill. It repairs one message after the fact. The real fix is a shared language agreed upfront, and that is [grill-with-docs](../engineering/grill-with-docs.md): a grilling session that runs [domain-modeling](../engineering/domain-modeling.md) as it goes, so it records the words you both use in your `GLOSSARY.md`. If you're unsure which skill fits the moment, [ask-skills](../engineering/ask-skills.md) routes you.

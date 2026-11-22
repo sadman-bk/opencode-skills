@@ -19,7 +19,7 @@ Add the plugin to `opencode.jsonc` (project) or `~/.config/opencode/opencode.jso
 }
 ```
 
-OpenCode reloads config without a restart. Then run `/setup-matt-pocock-skills` once per repo.
+OpenCode reloads config without a restart. Then run `/setup-skills` once per repo.
 
 </canonical-block>
 
@@ -41,7 +41,7 @@ A git branch ref is checked for updates at startup and every 24 hours, so the pl
 
 - Every model-invoked skill appears in the model's skill list, and loads when a task fits.
 - Every user-invoked skill is hidden from the model, and has a slash command (`/to-spec`) and an `@to-spec` mention.
-- Agent definitions in `agents/` are copied into your project by `setup-matt-pocock-skills`. A plugin cannot register agents, so this step is a copy.
+- Agent definitions in `agents/` are copied into your project by `setup-skills`. A plugin cannot register agents, so this step is a copy.
 
 ## Local checkout (maintainers)
 

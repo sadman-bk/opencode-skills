@@ -1,12 +1,12 @@
 ## What it does
 
-`ask-matt` is the router over the skills in this repo. You describe the situation you are in (an idea you cannot start, a pile of incoming bug reports, a session that has run long), and it names the skill or the sequence of skills that fits, plus where the human decisions in that sequence sit.
+`ask-skills` is the router over the skills in this repo. You describe the situation you are in (an idea you cannot start, a pile of incoming bug reports, a session that has run long), and it names the skill or the sequence of skills that fits, plus where the human decisions in that sequence sit.
 
 It recommends and stops. It does not grill, write a spec, open a file or fire the skill it just named; what you get back is the next thing to type, and you type it. It is also a hand-written map of the skills in this repo rather than a scan of what you have installed, so it will not route you over your own skills or another author's.
 
 ## When to reach for it
 
-You invoke this by typing `/ask-matt`; the agent won't reach for it on its own.
+You invoke this by typing `/ask-skills`; the agent won't reach for it on its own.
 
 | Your situation | What the router gives back |
 | --- | --- |
@@ -20,7 +20,7 @@ You invoke this by typing `/ask-matt`; the agent won't reach for it on its own.
 
 The router names skills; it does not install them. Everything it points at has to be installed for the recommendation to be actionable, and it only knows the promoted skills in this repo.
 
-The tracker-dependent routes (triage, `to-spec`, `to-tickets`, `implement`) assume [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) has already configured an issue tracker in the repo. The router recommends them even before that has happened.
+The tracker-dependent routes (triage, `to-spec`, `to-tickets`, `implement`) assume [setup-skills](./setup-skills.md) has already configured an issue tracker in the repo. The router recommends them even before that has happened.
 
 ## Flows, not skills
 
@@ -66,7 +66,7 @@ It is a fair complaint: most of the routing is deterministic, and the narrative 
 
 **Can it route over my own skills, or another author's?**
 
-No. `ask-matt` does not read your local `skills/` directory and recommend from whatever is installed. It is a map of one set, maintained by hand, and it knows nothing about skills you wrote or installed from elsewhere.
+No. `ask-skills` does not read your local `skills/` directory and recommend from whatever is installed. It is a map of one set, maintained by hand, and it knows nothing about skills you wrote or installed from elsewhere.
 
 **It told me to edit a SKILL.md.**
 
@@ -86,6 +86,6 @@ Check the changelog for a rename before assuming it is gone. `writing-great-skil
 
 ## Where it fits
 
-`ask-matt` is a **standalone router** that sits over the whole set. It is never a step in a chain. It points into every chain, and the other docs pages link back to it so none of them has to redraw the graph. From here you most often land on [grill-with-docs](./grill-with-docs.md), the head of the main flow, or [triage](./triage.md), the on-ramp for work that arrived rather than work you started.
+`ask-skills` is a **standalone router** that sits over the whole set. It is never a step in a chain. It points into every chain, and the other docs pages link back to it so none of them has to redraw the graph. From here you most often land on [grill-with-docs](./grill-with-docs.md), the head of the main flow, or [triage](./triage.md), the on-ramp for work that arrived rather than work you started.
 
 It is a secondary source over the skills it describes. Where the router and a `SKILL.md` disagree, the `SKILL.md` is right.

@@ -22,7 +22,7 @@ Greenfield is not a requirement. People use wayfinder routinely on legacy and ha
 
 ## Prerequisites
 
-The map and its tickets live on the repo's issue tracker, so wayfinder needs the tracker setup from [setup-matt-pocock-skills](./setup-matt-pocock-skills.md). That step writes a "Wayfinding operations" section. The section describes how to express the map, its child tickets, blocking edges, and frontier queries on GitHub, GitLab, or local markdown. Wayfinder finds that doc through the pointer in your `AGENTS.md`, not at a fixed path. With no tracker configured, it falls back to local markdown files.
+The map and its tickets live on the repo's issue tracker, so wayfinder needs the tracker setup from [setup-skills](./setup-skills.md). That step writes a "Wayfinding operations" section. The section describes how to express the map, its child tickets, blocking edges, and frontier queries on GitHub, GitLab, or local markdown. Wayfinder finds that doc through the pointer in your `AGENTS.md`, not at a fixed path. With no tracker configured, it falls back to local markdown files.
 
 The tracker does real work. Its native blocking links show the frontier in the tracker's own UI. On a tracker without native dependency links (a self-hosted Gitea, say), wayfinder infers blockers from the map text. That works, but you must supervise it more closely.
 
@@ -100,4 +100,4 @@ It is this skill. v1.1 renamed it to `wayfinder`, and you invoke it as `/wayfind
 
 `wayfinder` is a **situational on-ramp**, not the default starting point. Most work still starts on the grill-led idea → ship chain. You use wayfinder when the idea is too big to hold in one session. It rejoins that chain at [to-spec](./to-spec.md), because a cleared map hands off and does not build.
 
-Most of the work happens in other skills that wayfinder schedules. [grilling](../productivity/grilling.md) and [domain-modeling](./domain-modeling.md) resolve the default ticket type, [prototype](./prototype.md) resolves the tickets that talk cannot settle, and [research](./research.md) runs as a subagent so its reading stays out of your session. [handoff](../productivity/handoff.md) moves work in and out: into a map from a conversation that grew too big, and out of a map when a side quest appears mid-session. For anything else, [ask-matt](./ask-matt.md) routes over the whole set.
+Most of the work happens in other skills that wayfinder schedules. [grilling](../productivity/grilling.md) and [domain-modeling](./domain-modeling.md) resolve the default ticket type, [prototype](./prototype.md) resolves the tickets that talk cannot settle, and [research](./research.md) runs as a subagent so its reading stays out of your session. [handoff](../productivity/handoff.md) moves work in and out: into a map from a conversation that grew too big, and out of a map when a side quest appears mid-session. For anything else, [ask-skills](./ask-skills.md) routes over the whole set.

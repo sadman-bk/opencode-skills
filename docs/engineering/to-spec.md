@@ -19,7 +19,7 @@ Reach for it when the build is too big for one agent session and must be split a
 
 ## Prerequisites
 
-`to-spec` publishes the spec as an issue, so [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) must first configure a tracker and the triage-label vocabulary for this repo. Either kind of tracker works: a real tracker like GitHub, or local markdown files under `.scratch/`, which work with no extra setup.
+`to-spec` publishes the spec as an issue, so [setup-skills](./setup-skills.md) must first configure a tracker and the triage-label vocabulary for this repo. Either kind of tracker works: a real tracker like GitHub, or local markdown files under `.scratch/`, which work with no extra setup.
 
 ## The spec is a decision record
 
@@ -78,4 +78,4 @@ A tracker issue may not return a very large spec in full, and there is no local 
 grill-with-docs → to-spec → to-tickets → implement → code-review → retro
 ```
 
-Upstream, [grill-with-docs](./grill-with-docs.md) makes the decisions that this skill only records, and a finished [wayfinder](./wayfinder.md) map joins the chain here. Downstream, [to-tickets](./to-tickets.md) cuts the spec into tracer-bullet tickets for [implement](./implement.md) to build. When you're unsure which skill or flow fits, [ask-matt](./ask-matt.md) routes you.
+Upstream, [grill-with-docs](./grill-with-docs.md) makes the decisions that this skill only records, and a finished [wayfinder](./wayfinder.md) map joins the chain here. Downstream, [to-tickets](./to-tickets.md) cuts the spec into tracer-bullet tickets for [implement](./implement.md) to build. When you're unsure which skill or flow fits, [ask-skills](./ask-skills.md) routes you.

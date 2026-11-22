@@ -67,4 +67,4 @@ No. Finding the word that packs the most behaviour into the fewest tokens is wor
 
 ## Where it fits
 
-This is a reach-for-it-anytime standalone reference. It applies to the whole set, not to one skill. Every skill here was written with it, and it also covers the documents the other skills produce (a `GLOSSARY.md` and its ADRs, a spec, a ticket) once an agent has to read them. Its one direct caller is [retro](../engineering/retro.md), which loads it before proposing any steering file or skill. When you're unsure which skill or flow fits a task, [ask-matt](../engineering/ask-matt.md) routes you over the whole set.
+This is a reach-for-it-anytime standalone reference. It applies to the whole set, not to one skill. Every skill here was written with it, and it also covers the documents the other skills produce (a `GLOSSARY.md` and its ADRs, a spec, a ticket) once an agent has to read them. Its one direct caller is [retro](../engineering/retro.md), which loads it before proposing any steering file or skill. When you're unsure which skill or flow fits a task, [ask-skills](../engineering/ask-skills.md) routes you over the whole set.

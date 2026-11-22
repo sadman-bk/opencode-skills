@@ -73,4 +73,4 @@ More than for most skills. Grilling depends on the model's own knowledge of how 
 
 Portability is the only difference from [grill-with-docs](../engineering/grill-with-docs.md). That skill runs the same interview, but reads a codebase to align against and records what it learns as `GLOSSARY.md` and ADRs. Both use the [grilling](./grilling.md) skill underneath. `grill-me` is the user-invoked entry point that keeps no state.
 
-If what you grilled does turn out to be software, you can hand the same conversation to [to-spec](../engineering/to-spec.md) and carry on into the build flow (an option, not the point of the skill). When you're unsure which flow fits, [ask-matt](../engineering/ask-matt.md) routes you.
+If what you grilled does turn out to be software, you can hand the same conversation to [to-spec](../engineering/to-spec.md) and carry on into the build flow (an option, not the point of the skill). When you're unsure which flow fits, [ask-skills](../engineering/ask-skills.md) routes you.

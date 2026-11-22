@@ -20,7 +20,7 @@ You invoke this by typing `/triage` and then describing what you want in plain l
 
 ## Prerequisites
 
-`triage` reads and writes your issue tracker, so [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) must first configure that tracker and its label vocabulary. The role names below are **canonical**. The label strings in your tracker may differ, and setup provides the mapping. If your tracker already uses the canonical names exactly, you have nothing to map and nothing to set up.
+`triage` reads and writes your issue tracker, so [setup-skills](./setup-skills.md) must first configure that tracker and its label vocabulary. The role names below are **canonical**. The label strings in your tracker may differ, and setup provides the mapping. If your tracker already uses the canonical names exactly, you have nothing to map and nothing to set up.
 
 The tracker config also decides whether external pull requests count as a request surface, and who counts as external. That flag is off by default, and setup no longer asks about it. To bring PRs into scope, turn it on in `docs/agents/issue-tracker.md`.
 
@@ -75,7 +75,7 @@ No. They are already agent-ready. `to-tickets` applies the `ready-for-agent` lab
 Only if you have inbound work. `triage` is older than that flow and does a different job: it handles reports other people filed. If everything in your tracker came from your own planning, you will rarely use it. If you maintain anything public, or your team files bugs to you, it is where that work starts. The main use is open-source repos that take issues from external contributors.
 
 **The agent tried to apply `ready-for-agent` and `gh` said the label doesn't exist.**
-The label does not exist in your tracker yet. `setup-matt-pocock-skills` writes the label vocabulary into `docs/agents/triage-labels.md` and, on GitHub or GitLab, creates any configured label the tracker lacks. If setup ran before you added `triage`, or label creation failed, create the five state labels and two category labels yourself, once, with `gh label create` or the tracker's UI, and the error stops.
+The label does not exist in your tracker yet. `setup-skills` writes the label vocabulary into `docs/agents/triage-labels.md` and, on GitHub or GitLab, creates any configured label the tracker lacks. If setup ran before you added `triage`, or label creation failed, create the five state labels and two category labels yourself, once, with `gh label create` or the tracker's UI, and the error stops.
 
 **Five states aren't enough. What about blocked, or deferred, or implemented?**
 This is a real gap in the skill. It comes in three forms:
@@ -106,4 +106,4 @@ Yes. The tracker is config, not a hard-coded assumption. Setup ships templates f
 
 ## Where it fits
 
-`triage` is an **on-ramp**, not a step in the main chain. The main flow starts from an idea you had (grill, spec, tickets, implement, review). `triage` is the parallel lane for work that came from someone else. Both lanes end at the same place: an issue labelled `ready-for-agent` with a brief on it. [implement](./implement.md) picks that up the same way it picks up a ticket from [to-tickets](./to-tickets.md). When a request needs more detail before `triage` can brief it, `triage` runs [grilling](../productivity/grilling.md) and [domain-modeling](./domain-modeling.md) together, one round of questions at a time, so it records decisions in `GLOSSARY.md` and the ADRs as you make them. When you're not sure which lane you are in, [ask-matt](./ask-matt.md) routes you.
+`triage` is an **on-ramp**, not a step in the main chain. The main flow starts from an idea you had (grill, spec, tickets, implement, review). `triage` is the parallel lane for work that came from someone else. Both lanes end at the same place: an issue labelled `ready-for-agent` with a brief on it. [implement](./implement.md) picks that up the same way it picks up a ticket from [to-tickets](./to-tickets.md). When a request needs more detail before `triage` can brief it, `triage` runs [grilling](../productivity/grilling.md) and [domain-modeling](./domain-modeling.md) together, one round of questions at a time, so it records decisions in `GLOSSARY.md` and the ADRs as you make them. When you're not sure which lane you are in, [ask-skills](./ask-skills.md) routes you.

@@ -20,7 +20,7 @@ Tickets that `to-tickets` produced are agent-ready by construction. Don't run [t
 
 ## Prerequisites
 
-`to-tickets` publishes into a tracker, so [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) must have configured one for this repo, along with the triage-label vocabulary. Either kind works: a real tracker like GitHub or Linear, or local markdown files under `.scratch/`, which work with no extra setup.
+`to-tickets` publishes into a tracker, so [setup-skills](./setup-skills.md) must have configured one for this repo, along with the triage-label vocabulary. Either kind works: a real tracker like GitHub or Linear, or local markdown files under `.scratch/`, which work with no extra setup.
 
 ## Tracer bullets, not layers
 
@@ -62,7 +62,7 @@ Over-decomposition is the most reported problem with this skill, and many users 
 This is the failure the vertical-slice rule is written against, and the skill still produces it sometimes. Catch it at the quiz step by asking one question per ticket: what can I demo when this is done? A ticket with no answer is a horizontal slice. Some people add a "demo path" line to each ticket for this reason, and report that it pushes the model toward vertical slices.
 
 **On GitHub the tickets weren't created as sub-issues of the spec issue.**
-It was a common miss across runs and models, and it is fixed: `to-tickets` now makes each ticket a sub-issue of its source issue, and the GitHub tracker template gives the command (`gh issue create --parent <n>`, `gh` 2.94+). Re-run [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) to refresh an older `docs/agents/issue-tracker.md`.
+It was a common miss across runs and models, and it is fixed: `to-tickets` now makes each ticket a sub-issue of its source issue, and the GitHub tracker template gives the command (`gh issue create --parent <n>`, `gh` 2.94+). Re-run [setup-skills](./setup-skills.md) to refresh an older `docs/agents/issue-tracker.md`.
 
 **"Blocked by" was written into the issue body instead of a real blocking link.**
 This is the same kind of problem, and the agent sometimes even states that GitHub has no native blocking relationship at all. It does: `gh issue create --blocked-by 12,15`. Because the skill publishes blockers first, their numbers are always available at creation time. The body text is meant to be the fallback for trackers with no native edge, not the default. The ticket template now omits `## Blocked by` when the edges are native.
@@ -96,4 +96,4 @@ The skill stops at the artifact, and there is no auto-dispatch mode. Dispatch is
 grill-with-docs → to-spec → to-tickets → implement → code-review → retro
 ```
 
-Upstream is [to-spec](./to-spec.md), which hands it a settled spec to slice against. Keep both in one context window, with no `/new` between them. Downstream is [implement](./implement.md), which builds one ticket per fresh session, driving [tdd](./tdd.md) for the tests and closing with [code-review](./code-review.md). [implement-spec](./implement-spec.md) is the other way down. It reads the same blocking edges as a task graph and builds every ready ticket in parallel on one integration branch. When you're unsure which skill or flow fits, [ask-matt](./ask-matt.md) routes you.
+Upstream is [to-spec](./to-spec.md), which hands it a settled spec to slice against. Keep both in one context window, with no `/new` between them. Downstream is [implement](./implement.md), which builds one ticket per fresh session, driving [tdd](./tdd.md) for the tests and closing with [code-review](./code-review.md). [implement-spec](./implement-spec.md) is the other way down. It reads the same blocking edges as a task graph and builds every ready ticket in parallel on one integration branch. When you're unsure which skill or flow fits, [ask-skills](./ask-skills.md) routes you.

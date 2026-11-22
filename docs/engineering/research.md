@@ -32,7 +32,7 @@ The repo decides where the file goes, not the skill. It follows whatever convent
 
 **Can it start a second research agent from inside the first?**
 
-No. The `researcher` subagent does the reading itself, and the default depth limit of 1 means a subagent cannot start another. The skill says the same in so many words: when it is not running at top level, it works inline. The `researcher` agent is installed by [setup-matt-pocock-skills](./setup-matt-pocock-skills.md); if you skipped that step, the skill falls back to the built-in `general` agent.
+No. The `researcher` subagent does the reading itself, and the default depth limit of 1 means a subagent cannot start another. The skill says the same in so many words: when it is not running at top level, it works inline. The `researcher` agent is installed by [setup-skills](./setup-skills.md); if you skipped that step, the skill falls back to the built-in `general` agent.
 
 **Where should the file live, and should I commit it?**
 
@@ -68,4 +68,4 @@ No, it now fires them for you. A charting session spawns one `researcher` subage
 
 ## Where it fits
 
-`research` is a reach-for-it-anytime standalone. It feeds the thinking skills and is not a step in the build chain. You take its file *into* the flow. [grilling](../productivity/grilling.md) and [grill-with-docs](./grill-with-docs.md) ask sharper questions when they already have the facts, and [to-spec](./to-spec.md) can synthesise against it. [wayfinder](./wayfinder.md) is the one skill that invokes it directly. It resolves each research ticket on its map with a `researcher` subagent. For the whole map, see [ask-matt](./ask-matt.md).
+`research` is a reach-for-it-anytime standalone. It feeds the thinking skills and is not a step in the build chain. You take its file *into* the flow. [grilling](../productivity/grilling.md) and [grill-with-docs](./grill-with-docs.md) ask sharper questions when they already have the facts, and [to-spec](./to-spec.md) can synthesise against it. [wayfinder](./wayfinder.md) is the one skill that invokes it directly. It resolves each research ticket on its map with a `researcher` subagent. For the whole map, see [ask-skills](./ask-skills.md).

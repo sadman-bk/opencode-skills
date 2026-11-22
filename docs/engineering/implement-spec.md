@@ -17,9 +17,9 @@ You invoke this by typing `/implement-spec`, and the agent won't reach for it on
 
 ## Prerequisites
 
-- **An issue tracker.** The skill reads the tickets from, and resolves them on, the tracker [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) configured. If none has been configured, it stops and tells you to run that first rather than guessing.
+- **An issue tracker.** The skill reads the tickets from, and resolves them on, the tracker [setup-skills](./setup-skills.md) configured. If none has been configured, it stops and tells you to run that first rather than guessing.
 - **Tickets with blocking edges**, as [to-tickets](./to-tickets.md) writes them. Without edges the graph is flat and every ticket starts at once.
-- **The `implementer` and `merger` agents.** [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) copies them into `.opencode/agents/` (or `~/.config/opencode/agents/`). If they are missing, the skill tells you to run that, or falls back to `general`. Each runs as a background subagent with a fresh context window through the `subagent` tool, which is how the frontier's tickets run at the same time. OpenCode's default nesting depth is 1 (`experimental.subagent_depth`), so a subagent cannot start subagents of its own.
+- **The `implementer` and `merger` agents.** [setup-skills](./setup-skills.md) copies them into `.opencode/agents/` (or `~/.config/opencode/agents/`). If they are missing, the skill tells you to run that, or falls back to `general`. Each runs as a background subagent with a fresh context window through the `subagent` tool, which is how the frontier's tickets run at the same time. OpenCode's default nesting depth is 1 (`experimental.subagent_depth`), so a subagent cannot start subagents of its own.
 
 ## The integration branch
 
@@ -83,4 +83,4 @@ A worktree holds only what git tracks. Tests that read gitignored fixtures, loca
 grill-with-docs → to-spec → to-tickets → implement-spec → retro
 ```
 
-Its neighbours are [to-tickets](./to-tickets.md), which declares the blocking edges it reads as a task graph, and [code-review](./code-review.md), which it runs over the integration branch before closing out. [ask-matt](./ask-matt.md) is the router over the whole set when you are not sure which flow you are in.
+Its neighbours are [to-tickets](./to-tickets.md), which declares the blocking edges it reads as a task graph, and [code-review](./code-review.md), which it runs over the integration branch before closing out. [ask-skills](./ask-skills.md) is the router over the whole set when you are not sure which flow you are in.

@@ -7,7 +7,7 @@ metadata:
 
 You have been provided a spec. This spec should have tickets associated with it, describing how to implement the spec.
 
-The issue tracker should have been provided to you. If not, tell the user to run `/setup-matt-pocock-skills`.
+The issue tracker should have been provided to you. If not, tell the user to run `/setup-skills`.
 
 The goal is the entire spec implemented on a single **integration branch**, with every ticket resolved the way the issue tracker closes work.
 
@@ -17,7 +17,7 @@ Use the `subagent` tool. Every subagent starts with a fresh context window, runs
 
 Communication to and from subagents should be sparse. Communicate primarily through **context pointers**: to the spec, tickets, research notes, and previous commits. Don't duplicate information already available via pointers.
 
-Use the `implementer` agent for implementer subagents and the `merger` agent for merger subagents; make as many `subagent` calls as the frontier allows in one turn for maximum concurrency. If those agents are not installed, run `/setup-matt-pocock-skills`, or use `general`.
+Use the `implementer` agent for implementer subagents and the `merger` agent for merger subagents; make as many `subagent` calls as the frontier allows in one turn for maximum concurrency. If those agents are not installed, run `/setup-skills`, or use `general`.
 
 ## Steps
 

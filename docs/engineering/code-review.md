@@ -29,9 +29,9 @@ The Spec axis needs a spec to exist and be findable. It looks in this order:
 3. A spec file under `docs/`, `specs/`, or `.scratch/` matching the branch or feature name.
 4. Asking you.
 
-Step 1 depends on the tracker doc, which [setup-matt-pocock-skills](./setup-matt-pocock-skills.md) writes. Without it the axis still works if you hand it a path. With no spec at all, the skill skips the Spec sub-agent and the report says "no spec available" rather than inventing requirements.
+Step 1 depends on the tracker doc, which [setup-skills](./setup-skills.md) writes. Without it the axis still works if you hand it a path. With no spec at all, the skill skips the Spec sub-agent and the report says "no spec available" rather than inventing requirements.
 
-Both axes run through the `code-reviewer` agent, which `/setup-matt-pocock-skills` copies into `.opencode/agents/`. It cannot edit files or start other agents.
+Both axes run through the `code-reviewer` agent, which `/setup-skills` copies into `.opencode/agents/`. It cannot edit files or start other agents.
 
 ## The two axes
 
@@ -86,4 +86,4 @@ No. It diffs `<fixed-point>...HEAD`. The three-dot form measures from the merge-
 - [to-spec](./to-spec.md) and [to-tickets](./to-tickets.md) produce the document the Spec axis checks against, so a vague spec makes that axis vague.
 - [improve-codebase-architecture](./improve-codebase-architecture.md) is the whole-codebase counterpart, because this skill only looks at one diff.
 
-[ask-matt](./ask-matt.md) routes across the whole set when you are unsure which skill the situation wants.
+[ask-skills](./ask-skills.md) routes across the whole set when you are unsure which skill the situation wants.

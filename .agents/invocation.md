@@ -22,11 +22,11 @@ Bucket `README.md`s and the top-level `README.md` group entries into **User-invo
 
 Dependencies are expressed as an explicit instruction to **call the skill tool** with the named skill (`Call the skill tool with id "grilling"`), not deep `../other-skill/FILE.md` cross-references, and not a bare `@skill` mention left for the model to interpret. The tool takes `{ id }`, and spelling that out gets a higher hit rate than a name dropped into prose. Shared reference docs live inside the skill that owns them; other skills reach that material by calling the skill tool with it, not by linking across folders.
 
-This is about **operative** instructions: a skill's own steps telling the agent to go run another skill right now. Router prose that just names skills for a human to pick from (`ask-matt`, bucket `README.md`s) isn't invoking anything, so it uses `/skill` names as plain labels.
+This is about **operative** instructions: a skill's own steps telling the agent to go run another skill right now. Router prose that just names skills for a human to pick from (`ask-skills`, bucket `README.md`s) isn't invoking anything, so it uses `/skill` names as plain labels.
 
 The skill tool takes one skill per call. A step that needs two skills is two calls: say so (`Call the skill tool twice, for "grilling" and "domain-modeling"`).
 
-This whole convention only holds when the named skill is **model-invoked**. When a step's precondition is a user-invoked skill (e.g. `setup-matt-pocock-skills`), phrase it as an instruction for the human to act on: "tell the user to run `/setup-matt-pocock-skills`", never as a skill tool call.
+This whole convention only holds when the named skill is **model-invoked**. When a step's precondition is a user-invoked skill (e.g. `setup-skills`), phrase it as an instruction for the human to act on: "tell the user to run `/setup-skills`", never as a skill tool call.
 
 ## Passive vs active domain work
 

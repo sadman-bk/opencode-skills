@@ -19,7 +19,7 @@ Users install it with a git ref in their `opencode.jsonc`. A branch ref is check
 
 ## Constraints we hit
 
-- A plugin cannot register agents (the agent editor has no `add`). Agent definitions ship as markdown in `agents/` and are copied by `setup-matt-pocock-skills`.
+- A plugin cannot register agents (the agent editor has no `add`). Agent definitions ship as markdown in `agents/` and are copied by `setup-skills`.
 - A skill ID is its directory name, so IDs must be unique across all buckets. `npm run check` enforces this.
 - `metadata.opencode/autoinvoke: false` hides a skill from the model's skill list. It does not forbid the model from loading it by ID if it is told the ID, so user-invoked skills must not be named in other skills' operative steps.
 - Subagents run in the background in a fresh context, and nesting is capped at `experimental.subagent_depth` (default 1). A skill that dispatches a subagent must not depend on that subagent dispatching another.
