@@ -1,6 +1,6 @@
 {
   "name": "opencode-skills",
-  "version": "1.3.2",
+  "version": "2.0.0",
   "private": true,
   "description": "Engineering and productivity skills for OpenCode v2, shipped as a native OpenCode plugin",
   "repository": {
