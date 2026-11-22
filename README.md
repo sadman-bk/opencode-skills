@@ -6,11 +6,13 @@ Developing real applications is hard. Approaches like GSD, BMAD, and Spec-Kit tr
 
 These skills are designed to be small, easy to adapt, and composable. They work with any model OpenCode can talk to. Hack around with them. Make them your own.
 
-## Installation (30-second setup)
+**Contents:** [Install](#install) · [Using skills in OpenCode](#using-skills-in-opencode) · [Recommended flow](#recommended-flow) · [Why these skills exist](#why-these-skills-exist) · [Reference](#reference)
 
-This repo is an OpenCode plugin. It registers the skills, a `/command` for every user-invoked skill, and ships four subagent definitions.
+## Install
 
-### 1. Get the skills
+You need OpenCode v2 (tested on 2.3.2) and git. The issue-tracker skills also use `gh` or `glab` if you pick GitHub or GitLab.
+
+### 1. Add the plugin
 
 Add the plugin to `opencode.jsonc` (project) or `~/.config/opencode/opencode.jsonc` (all projects):
 
@@ -23,18 +25,130 @@ Add the plugin to `opencode.jsonc` (project) or `~/.config/opencode/opencode.jso
 }
 ```
 
-OpenCode reloads config without a restart, and checks a git branch ref for updates at startup and every 24 hours, so the plugin updates itself. Pin a tag or commit (`#v2.0.0`) to stop that. The `buckets` option (default `["engineering", "productivity"]`) opts in to the `in-progress` and `misc` skills, `commands` (`"all"`, `"user-invoked"`, `"none"`) controls which skills get a slash command, and `exclude` skips skill IDs. See [.agents/install-block.md](./.agents/install-block.md) for options and name collisions.
+OpenCode reloads config without a restart. Then run `/setup-skills` once per repo.
 
-### 2. Run `/setup-skills`
+The plugin registers every skill, a slash command for each one, and an `@skill-id` mention. A branch ref (`#main`) is checked for updates at startup and every 24 hours, so the plugin updates itself. Pin a tag (`#v2.0.0`) to stop that, and run `opencode plugin update` to force a check.
 
-In OpenCode, run it once per repo. It will:
+| Option | Default | What it does |
+| --- | --- | --- |
+| `buckets` | `["engineering", "productivity"]` | Skill folders to load. Add `"in-progress"` or `"misc"` (for example `git-guardrails`) to opt in to skills that aren't promoted. |
+| `commands` | `"all"` | `"user-invoked"` registers slash commands only for the hidden skills; `"none"` registers none. |
+| `exclude` | `[]` | Skill IDs to skip, for example one you already have in `~/.config/opencode/skills/` (a skill you install yourself shadows the plugin's). |
+
+See [.agents/install-block.md](./.agents/install-block.md) for a local checkout and name collisions.
+
+### 2. Run `/setup-skills` in each repo
+
+It will:
 
 - Ask you which issue tracker you want to use (GitHub, GitLab, local files, or anything else you describe)
 - Ask you what labels you apply to tickets when you triage them (`/triage` uses labels)
 - Ask you where you want to save any docs we create
-- Offer to copy the `implementer`, `merger`, `researcher` and `code-reviewer` subagents into `.opencode/agents/` (a plugin cannot register agents, so this step is a copy)
+- Offer to copy the four subagents below into `.opencode/agents/` (or `~/.config/opencode/agents/`). A plugin can't register agents, so this step is a copy.
 
-### 3. Bam - you're ready to go.
+**Commit `.opencode/agents/`.** `/implement-spec` runs each implementer in its own git worktree, and a worktree only contains tracked files, so an uncommitted agent is "not found" there.
+
+### 3. Check it worked
+
+Type `/` in the TUI: you should see `/ask-skills`, `/grill-with-docs`, `/tdd` and the rest. Run `/agents` to see `implementer`, `merger`, `researcher` and `code-reviewer`.
+
+## Using skills in OpenCode
+
+### Three ways a skill runs
+
+| How | Example | When |
+| --- | --- | --- |
+| **Slash command** | `/to-tickets .scratch/auth/spec.md` | You want a skill now. Text after the command is passed to it. Also in the **Ctrl+P** command palette. |
+| **Mention** | `Fix the login redirect, @tdd` | You want a skill pulled into a normal prompt. |
+| **Model-invoked** | "this test is flaky, find out why" loads `diagnosing-bugs` | The agent loads it when the task fits. Only model-invoked skills are listed for the agent. |
+
+**User-invoked** skills (`/grill-with-docs`, `/to-spec`, `/implement`...) orchestrate a whole phase, so they stay hidden from the model and only start when you type them. **Model-invoked** skills (`tdd`, `code-review`, `diagnosing-bugs`...) hold reusable discipline, so the agent may reach for them on its own. The [Reference](#reference) lists which is which.
+
+Not sure which one fits? Run **`/ask-skills`** and describe your situation. It's a router over every skill here.
+
+### Agents
+
+Use the built-in **`build`** agent (the default) for every flow: the skills write files such as `GLOSSARY.md`, specs and tickets. Switch with **Shift+Tab** or `/agents`. The read-only **`plan`** agent only suits `/grill-me`, which saves nothing.
+
+`/setup-skills` installs four subagents. Each starts with a fresh context and can't `git push`:
+
+| Subagent | Started by | Job |
+| --- | --- | --- |
+| `implementer` | `/implement-spec` | Builds one ticket in its own git worktree, test-first. |
+| `merger` | `/implement-spec` | Merges finished ticket branches into the integration branch. |
+| `researcher` | `research`, `/wayfinder` | Reads primary sources and writes a cited note. |
+| `code-reviewer` | `code-review` | Reviews a diff on one axis (Standards or Spec). Doesn't edit files. |
+
+Subagents run in the background, so keep working while they do. OpenCode lets subagents nest one level deep by default (`experimental.subagent_depth: 1`). The skills are written for that, so leave it as it is.
+
+### Session moves you'll use
+
+| Move | In OpenCode |
+| --- | --- |
+| Fresh session | **Ctrl+X N**. Old sessions stay in `/sessions` (**Ctrl+X L**). |
+| Parallel work | Tabs: **Ctrl+Tab** to switch, one session per tab. |
+| Shrink a long session | Automatic compaction (`compaction.auto`). To do it at a phase boundary: `opencode api post /api/session/<id>/compact --data '{}'`. |
+| Undo a bad turn | `/undo` (it also reverts the file edits). |
+| Hand work to another model, directory or person | `/handoff`, then start a new session on the file. |
+| Headless run | `opencode run "/implement 42"`. Add `--worktree` to run it in a new git worktree. |
+
+### Optional: git guardrails
+
+Add `"misc"` to `buckets` and run `/git-guardrails`. It writes OpenCode `shell` permission rules that block `git push`, `git reset --hard`, `git clean -f`, `git branch -D` and similar commands, project-wide or globally.
+
+## Recommended flow
+
+Most work travels one **main flow**, from idea to shipped code:
+
+```mermaid
+flowchart TD
+    A["/grill-with-docs<br/>(or /grill-me outside a repo)"] --> B{Need a runnable answer?}
+    B -- yes --> P["/handoff → prototype → /handoff back"] --> C
+    B -- no --> C{Bigger than one session?}
+    C -- no --> I1["/implement here<br/>(tdd + code-review)"]
+    C -- yes --> S["/to-spec"] --> T["/to-tickets"]
+    T --> I2["/implement per ticket<br/>(fresh session each)"]
+    T --> I3["/implement-spec<br/>(parallel implementers)"]
+    I1 --> R["PR (pr skill) → /retro"]
+    I2 --> R
+    I3 --> R
+```
+
+1. **Sharpen the idea:** `/grill-with-docs`. It interviews you one round at a time, asking pick-one questions through OpenCode's question picker. It records the terms it settles in `GLOSSARY.md` and the decisions in ADRs, so later sessions start with the shared language. Outside a repo, use `/grill-me`.
+2. **Prove the risky part (optional):** if a question needs running code to settle, run `/handoff`, open a new session, prototype it (`@prototype`), then `/handoff` the answer back.
+3. **Plan, if it's bigger than one session:** run `/to-spec` and then `/to-tickets`. **Keep steps 1 to 3 in one session.** The spec and tickets are better when the grilling is still in context, so don't start a new session until the tickets exist.
+4. **Build.** Pick one:
+   - **Small:** `/implement` in the same session.
+   - **Ticket by ticket:** a fresh session (**Ctrl+X N**) for each ticket, then `/implement <ticket>`. Each ticket carries its own context.
+   - **Whole spec at once:** `/implement-spec`. It runs `implementer` subagents in parallel, one per ready ticket, each in its own worktree. The results land on one integration branch, and `code-review` runs over that branch.
+
+   Either way the code is built test-first with `tdd`, and a two-axis `code-review` (Standards and Spec) closes it out.
+5. **Ship and learn:** the agent shapes the PR body with the `pr` skill. Then run `/retro` **in the same session**. It turns what went wrong into checks, coding standards or steering-file fixes, so the next build starts from a better environment.
+
+### Where else to start
+
+| Situation | Start with | Then |
+| --- | --- | --- |
+| A pile of incoming bugs and requests | `/triage` | `/implement` each agent-ready issue |
+| A hard bug, flake or regression | `@diagnosing-bugs` | `/retro` in the same session |
+| A huge, foggy effort (new product, big rewrite) | `/wayfinder` | `/to-spec` once the map is clear, then step 3 |
+| Spare time, codebase feels muddy | `/improve-codebase-architecture` | Pick a candidate and run `/grill-with-docs` on it |
+| You need someone else's answer | `/to-questionnaire` | Feed the answers into `/grill-with-docs` or `/to-spec` |
+| Reading legwork | `@research` | Keep working; take the cited note into the grilling |
+| A step only a human can do (secrets, dashboards) | `@wizard` | Run the generated script |
+| A reply you didn't follow | `/wait-what` | Carry on |
+
+### At a phase boundary
+
+When one phase ends (the grilling is done, the tickets exist, the build is merged), ask these in order and stop at the first yes:
+
+1. Does the next phase need this one verbatim, and does it still fit? **Continue.**
+2. Is this context useless for what's next? **New session** (Ctrl+X N).
+3. Is the work moving to another model, directory or person? **`/handoff`**.
+4. Can it run unattended? Hand it to a **subagent**.
+5. Otherwise, **compact** and carry on.
+
+[PHASE-BOUNDARIES.md](./skills/engineering/ask-skills/PHASE-BOUNDARIES.md) explains the reasoning behind each question.
 
 ## Why These Skills Exist
 
