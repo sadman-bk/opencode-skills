@@ -1,5 +1,11 @@
 # opencode-skills
 
+## 2.0.1
+
+### Patch Changes
+
+- [#4](https://github.com/sadman-bk/opencode-skills/pull/4) [`22a5c01`](https://github.com/sadman-bk/opencode-skills/commit/22a5c017f07aeb3844d7d33d4f9896d3e282bae1) Thanks [@sadman-bk](https://github.com/sadman-bk)! - `setup-skills` and `setup-ts-deep-modules` now offer to rename a legacy `CLAUDE.md` to `AGENTS.md` instead of editing it, because OpenCode stops reading `CLAUDE.md` once an `AGENTS.md` exists. The in-progress `software-factory` skill is removed.
+
 ## 2.0.0
 
 ### Major Changes
