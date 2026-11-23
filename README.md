@@ -77,7 +77,7 @@ Use the built-in **`build`** agent (the default) for every flow: the skills writ
 | `implementer` | `/implement-spec` | Builds one ticket in its own git worktree, test-first. |
 | `merger` | `/implement-spec` | Merges finished ticket branches into the integration branch. |
 | `researcher` | `research`, `/wayfinder` | Reads primary sources and writes a cited note. |
-| `code-reviewer` | `code-review` | Reviews a diff on one axis (Standards or Spec). Doesn't edit files. |
+| `code-reviewer` | `code-review` | Reviews a diff on one axis (Risk, Standards or Spec). Read-only: every tool is denied except reads, search and a read-only `git`/`gh` shell allowlist. |
 
 Subagents run in the background, so keep working while they do. OpenCode lets subagents nest one level deep by default (`experimental.subagent_depth: 1`). The skills are written for that, so leave it as it is.
 
@@ -122,7 +122,7 @@ flowchart TD
    - **Ticket by ticket:** a fresh session (**Ctrl+X N**) for each ticket, then `/implement <ticket>`. Each ticket carries its own context.
    - **Whole spec at once:** `/implement-spec`. It runs `implementer` subagents in parallel, one per ready ticket, each in its own worktree. The results land on one integration branch, and `code-review` runs over that branch.
 
-   Either way the code is built test-first with `tdd`, and a two-axis `code-review` (Standards and Spec) closes it out.
+   Either way the code is built test-first with `tdd`, and a three-axis `code-review` (Risk, Standards and Spec) closes it out.
 5. **Ship and learn:** the agent shapes the PR body with the `pr` skill. Then run `/retro` **in the same session**. It turns what went wrong into checks, coding standards or steering-file fixes, so the next build starts from a better environment.
 
 ### Where else to start
@@ -280,7 +280,7 @@ Skills for daily code work.
 - **[tdd](./skills/engineering/tdd/SKILL.md)**: Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
 - **[domain-modeling](./skills/engineering/domain-modeling/SKILL.md)**: Actively build and sharpen a project's domain model: challenge terms against the glossary, stress-test with edge-case scenarios, and update `GLOSSARY.md` and ADRs inline.
 - **[codebase-design](./skills/engineering/codebase-design/SKILL.md)**: Shared discipline and vocabulary for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface.
-- **[code-review](./skills/engineering/code-review/SKILL.md)**: Two-axis review of the diff since a fixed point: **Standards** (does it follow the repo's coding standards, plus a Fowler smell baseline?) and **Spec** (does it faithfully implement the originating issue/spec?), run as parallel sub-agents so neither pollutes the other.
+- **[code-review](./skills/engineering/code-review/SKILL.md)**: Read-only, three-axis review of a branch, PR or work-in-progress diff: **Risk** (bugs, edge cases, regressions, security, missing tests), **Standards** (does it follow the repo's coding standards, plus a Fowler smell baseline?) and **Spec** (does it faithfully implement the originating issue/spec?), run as parallel sub-agents so none pollutes another, with serious findings verified before a verdict.
 - **[pr](./skills/engineering/pr/SKILL.md)**: The shape a pull request body should take: a summary as the smallest visual that makes the change clear, before/after evidence that it works, and a merge-danger call (one-way or two-way door, plus blast radius).
 - **[wizard](./skills/engineering/wizard/SKILL.md)**: Generate an interactive bash wizard that walks a human through steps only they can perform: provisioning infrastructure, setting up credentials or CI secrets, walking an unfamiliar third-party dashboard, or running a one-off migration or cutover.
 
