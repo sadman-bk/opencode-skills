@@ -1,6 +1,6 @@
 # In Progress
 
-Beta. These skills are public on purpose: try them and tell us what breaks. They're not registered by the plugin by default and are left out of the top-level README until they graduate to a stable bucket, they get no docs pages, and they can change or disappear without warning.
+Beta. These skills are public on purpose: try them and tell us what breaks. They're not registered by the plugin by default and are left out of the top-level README until they graduate to a stable bucket, and they can change or disappear without warning.
 
 Opt in with the plugin's `buckets` option (see the [install block](../../.agents/install-block.md)): add `"in-progress"`.
 
@@ -10,4 +10,3 @@ Opt in with the plugin's `buckets` option (see the [install block](../../.agents
 - **[writing-shape](./writing-shape/SKILL.md)**: Take a markdown file of raw material and shape it into an article paragraph by paragraph, arguing format choices at each step.
 - **[background-handoff](./background-handoff/SKILL.md)**: Hand the current conversation off to a fresh background subagent that picks up the work immediately, seeded with a handoff summary. User-invoked.
 - **[setup-ts-deep-modules](./setup-ts-deep-modules/SKILL.md)**: Wire dependency-cruiser into a TypeScript repo so each package is a deep module: implementation hidden in subfolders, reachable only through its entry-point files, tests exercising it through those. User-invoked.
-- **[software-factory](./software-factory/SKILL.md)**: Shared language for designing a software factory: the tasks it runs and the services it plugs into. Call it alongside a grilling session. User-invoked.
