@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "changeset": "changeset",
-    "version": "changeset version",
+    "version": "changeset version && npm install --package-lock-only --ignore-scripts",
     "check": "node scripts/check-skills.mjs"
   },
   "devDependencies": {
