@@ -27,7 +27,7 @@ Add the plugin to `opencode.jsonc` (project) or `~/.config/opencode/opencode.jso
 
 OpenCode reloads config without a restart. Then run `/setup-skills` once per repo.
 
-The plugin registers every skill, a slash command for each one, and an `@skill-id` mention. A branch ref (`#main`) is checked for updates at startup and every 24 hours, so the plugin updates itself. Pin a tag (`#v2.0.0`) to stop that, and run `opencode plugin update` to force a check.
+The plugin registers every skill, a slash command for each one, and an `@skill-id` mention. A branch ref (`#main`) is checked for updates at startup and every 24 hours, so the plugin updates itself. Pin a tag (`#v2.0.1`) to stop that, and run `opencode plugin update` to force a check.
 
 | Option | Default | What it does |
 | --- | --- | --- |

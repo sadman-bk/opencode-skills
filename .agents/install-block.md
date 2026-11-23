@@ -23,7 +23,7 @@ OpenCode reloads config without a restart. Then run `/setup-skills` once per rep
 
 </canonical-block>
 
-A git branch ref is checked for updates at startup and every 24 hours, so the plugin updates itself. Pin a tag or commit (`#v2.0.0`) to stop that. `opencode plugin update` forces a check.
+A git branch ref is checked for updates at startup and every 24 hours, so the plugin updates itself. Pin a tag or commit (`#v2.0.1`) to stop that. `opencode plugin update` forces a check.
 
 ## Options
 

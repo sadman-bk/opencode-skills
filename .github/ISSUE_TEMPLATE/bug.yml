@@ -20,7 +20,7 @@ body:
     attributes:
       label: Version or commit
       description: The plugin version (`package.json`), or the commit SHA you installed from. Many bugs are already fixed on `main`.
-      placeholder: 2.0.0, or 4588b32
+      placeholder: 2.0.1, or 4588b32
     validations:
       required: true
   - type: input
