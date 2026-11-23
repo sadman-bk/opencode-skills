@@ -28,5 +28,3 @@ Users install it with a git ref in their `opencode.jsonc`. A branch ref is check
 
 - Every promoted skill lives in `skills/engineering/` or `skills/productivity/` and appears in its bucket `README.md`. `npm run check` fails otherwise.
 - The plugin's frontmatter reader and a strict YAML parser must agree on every skill. `npm run check` fails otherwise.
-
-Supersedes ADR 0002, which recorded the Claude Code plugin decision. That file was deleted in this migration; it remains in git history.

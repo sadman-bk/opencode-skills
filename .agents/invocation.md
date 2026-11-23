@@ -14,7 +14,7 @@ Every `SKILL.md` in this repo is a skill. The plugin registers a slash command n
 
 A user-invoked skill is not in the model's list, so no other skill can reach it by name. A user-invoked skill may invoke model-invoked skills, but it can never reach another user-invoked skill.
 
-Do not use `disable-model-invocation`, and do not add an `agents/openai.yaml`. OpenCode honors the old flag, but this repo keeps one native spelling, and `npm run check` rejects both.
+`metadata.opencode/autoinvoke: false` is the only spelling. `npm run check` rejects any other invocation metadata.
 
 Bucket `README.md`s and the top-level `README.md` group entries into **User-invoked** and **Model-invoked**.
 

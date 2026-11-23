@@ -22,7 +22,7 @@ This is a prompt-driven skill, not a deterministic script. Explore, present what
 Look at the current repo to understand its starting state. Read whatever exists; don't assume:
 
 - `git remote -v` and `.git/config`: is this a GitHub repo? Which one?
-- `AGENTS.md` and `CLAUDE.md` at the repo root: does either exist? Is there already an `## Agent skills` section in either? (OpenCode reads `AGENTS.md` first and only falls back to `CLAUDE.md` when `AGENTS.md` is absent.)
+- `AGENTS.md` at the repo root: does it exist? Is there already an `## Agent skills` section? Also note a legacy `CLAUDE.md`: OpenCode reads it only in a directory that has no `AGENTS.md`.
 - `.opencode/agents/` and `~/.config/opencode/agents/`: are the `implementer`, `merger`, `researcher` and `code-reviewer` agents already there?
 - `GLOSSARY.md` and `GLOSSARY-MAP.md` at the repo root, and the legacy `CONTEXT.md` / `CONTEXT-MAP.md`. If a legacy file exists, offer to `git mv` it to its `GLOSSARY` name and rewrite those names in `docs/agents/domain.md`.
 - `docs/adr/` and any `src/*/docs/adr/` directories
@@ -68,7 +68,7 @@ Offer **multi-context** (a root `GLOSSARY-MAP.md` pointing to per-context `GLOSS
 
 Show the user a draft of:
 
-- The `## Agent skills` block to add to whichever of `AGENTS.md` / `CLAUDE.md` is being edited (see step 4 for selection rules)
+- The `## Agent skills` block to add to `AGENTS.md` (see step 4 for the legacy `CLAUDE.md` case)
 - The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, and `docs/agents/triage-labels.md` (the last only when `triage` is installed)
 
 Let them edit before writing.
@@ -77,11 +77,11 @@ Let them edit before writing.
 
 **Pick the file to edit:**
 
-- If `AGENTS.md` exists, edit it.
-- Else if `CLAUDE.md` exists, edit it (OpenCode reads it when there is no `AGENTS.md`).
+- If `AGENTS.md` exists, edit it. If a `CLAUDE.md` sits next to it, tell the user OpenCode ignores that file and offer to merge anything still useful into `AGENTS.md`.
+- Else if only `CLAUDE.md` exists, offer to rename it with `git mv CLAUDE.md AGENTS.md`, then edit `AGENTS.md`. If the user declines, edit `CLAUDE.md` instead.
 - If neither exists, create `AGENTS.md`.
 
-Never create `AGENTS.md` when `CLAUDE.md` already exists, and never create `CLAUDE.md`; always edit the one that's already there.
+Never create `AGENTS.md` next to a `CLAUDE.md` without the rename: once `AGENTS.md` exists, OpenCode stops reading `CLAUDE.md`, and its instructions drop out silently. Never create `CLAUDE.md`.
 
 If an `## Agent skills` block already exists in the chosen file, update its contents in-place rather than appending a duplicate. Don't overwrite user edits to the surrounding sections.
 
